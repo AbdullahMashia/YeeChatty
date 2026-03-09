@@ -2,28 +2,38 @@
 
 
 {% block title %}
+    <link rel="StyleSheet" href="static/css/splash.css">
     <title>Splash Screen</title>
 {% endblock %}
 
 {%block login_status %}
-    <button id="login_but">login</button>
-{%endblock%%}
+    <a style="color:white" href="/login">login</a>
+{%endblock%}
 
 {% block body %}
-<article>
+<div id="splash_screen">
+<article id="splash_article">
+    <img   src="/static/media/imgs/myIntro.gif" alt="intro" id="splash_image">
+
 <div id="intro">
     <p>
-        <span>YeeChatty:</span>
+        <span>YeeChatty:</span><br>
         First Chat Webiste in Yemen That gives you the power of secure chat ,
          and hands you the key to a secure ,private, chat with anyone around the world
     </p>
 
 </div>
-<img id="splash_image" alt="Introduction">
+
 </article>
-<footer>
-    <a href="/register">join</a>
+<section>
+
+     <div id="join_but"><a href="/register"><span></span>join<span></a></div>
     <p>Already Have an account <a href="/login">login</a> </p>
+
+</section>
+<footer>
+
 </footer>
 
+</div>
 {% endblock%}

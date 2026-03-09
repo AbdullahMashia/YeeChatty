@@ -4,11 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <link href="../static/css/mainStyle.css" rel="stylesheet">
-=======
-    <link href="../static/css/mainStyle.css" rel="StyleSheet">
->>>>>>> 006d2932fdb880c5354a5574e9536c1fbf6a808c
+    <link rel="stylesheet" href="/static/css/mainStyle.css">
     <link rel="icon" href="../static/media/imgs/myicon.ico">
     {% block title %}
 
@@ -17,15 +13,15 @@
 <body>
     <header>
         <div id="logo">
-            <img src="../static/media/imgs/mylogo.png" alt="YeeChatty">
+            <img src="../static/media/imgs/mylogo.png" alt="YeeChatty" >
         </div>
-        {%block login_status %}
-        {% endblock %}
+        <div  id="login_logout"> {%block login_status %}man{% endblock %}</div>
+
     </header>
 
     {% block body %}
 
     {% endblock %}
-</body>
+
 
 </html>
