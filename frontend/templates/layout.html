@@ -1,1 +1,24 @@
-<!Doctype HTML
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="stylesheet" href="../static/style.css">
+    {%block title %}
+    {% endblock %}
+</head>
+<body>
+<header>
+    <div id="logo"><img src="../static/logo.png" alt="YeeChatty"></div>
+    {% block login_status %}
+    {% endblock %}
+
+</header>
+{% block body %}
+
+{% endblock %}
+
+
+
+</html>
