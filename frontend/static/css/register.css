@@ -1,4 +1,4 @@
-#login_screen{
+#reg_screen{
     width:100vw;
     height: 100vh;
 
@@ -10,9 +10,10 @@
 form{
     display: flex;
     flex-direction: column;
-    gap: 3vh;
+    gap: 1vh;
     width: clamp(20vw,30vw,60vw);
     align-items: center;
+
 
 
 }
@@ -22,10 +23,11 @@ form button:hover{
      background-color: rgb(4, 80, 220);
 }
 input{
+
     height:clamp(3vh,5vh,10vh);
     border-radius: 3vw;
     width:clamp(20vw,30vw,60vw) ;
-       font-size: clamp(0.5rem,1.2rem, 2rem);
+    font-size: clamp(0.5rem,1.2rem, 2rem);
     text-align: center;
 }
 form button{
@@ -43,7 +45,7 @@ p a{
 p{
     font-size: clamp(0.5rem, 1.2rem, 2rem);
 }
-#go_to_register{
+#go_to_login{
     font-size: clamp(1.5rem,2rem, 3rem);
 
 }
@@ -51,6 +53,14 @@ p{
 @media (min-width:300px) and (max-width:800px)
 {
 
+    input{
+
+    height:clamp(3vh,5vh,10vh);
+    border-radius: 3vw;
+    width:clamp(30vw,50vw,60vw) ;
+    font-size: clamp(0.5rem,1.2rem, 2rem);
+    text-align: center;
+}
 }
 @media (min-width:800px)
 {
