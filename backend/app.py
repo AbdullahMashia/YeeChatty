@@ -8,3 +8,7 @@ app = Flask(__name__, template_folder=os.path.join(project_root , "frontend/temp
 def splash():
     return render_template("splash.html")
 
+
+@app.route("/login")
+def login():
+    return render_template("login.html")

@@ -11,7 +11,7 @@ header{
     background-color: rgb(4, 55, 196);
     position: relative;
 
-    height: clamp(30px, 15vh, 20vh);
+    height: clamp(10vh, 15vh, 20vh);
     display: flex;
     justify-content: right;
     align-items:end;
@@ -52,7 +52,8 @@ header a{
 #logo img {position: relative;left:-5vw;width:13vh}
 
 header{
-    width: 140vw;
+    width: 100vw;
+
 }
 
 #login_logout{
