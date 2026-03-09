@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+
+{% block title}
+    <title>Splash Screen</title>
+{% endblock %}
+
+{%block login_status %}
+    <button id="login_but">login</button>
+{%endblock}
+
+{% block body %}
+<article>
+<div id="intro">
+    <p>
+        <span>YeeChatty:</span>
+        First Chat Webiste in Yemen That gives you the power of secure chat ,
+         and hands you the key to a secure ,private, chat with anyone around the world
+    </p>
+
+</div>
+<img id="splash_image" alt="Introduction">
+</article>
+<footer>
+    <a href="/register">join</a>
+    <p>Already Have an account <a href="/login">login</a> </p>
+</footer>
+
