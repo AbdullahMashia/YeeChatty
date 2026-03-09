@@ -4,11 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/mainStyle.css" rel="StyleSheet">
+    <link rel="icon" href="../static/media/imgs/myicon.ico">
     {% block title %}
 
     {% endblock %}
 </head>
 <body>
+    <header>
+        <div id="logo">
+            <img src="../static/media/imgs/mylogo.png" alt="YeeChatty">
+        </div>
+        {%block login_status %}
+        {% endblock %}
+    </header>
+
     {% block body %}
 
     {% endblock %}
