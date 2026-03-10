@@ -45,14 +45,15 @@ form button:hover{
     list-style: none;
 }
 
+
 #nav li button{
 
-    font-size: clamp(1.5rem, 2.5rem, 3.5rem);
+    font-size: clamp(1.5rem, 2rem, 3.5rem);
     border-radius: 2vw;
-   width: clamp(10vw,20vw,30vw);
+   width: clamp(8vw,15vw,30vw);
     list-style: none;
     margin-right: 1vh;
-    height:clamp(5vh,10vh,15vh);
+    height:clamp(5vh,8vh,15vh);
     background-color: rgb(4, 80, 220);
 
 }
@@ -63,6 +64,7 @@ form button:hover{
     background-color: rgb(4, 20, 220);
 
 }
+
 #chat{
     color:goldenrod;
 }

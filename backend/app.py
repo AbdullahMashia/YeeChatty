@@ -21,3 +21,7 @@ def register():
 @app.route("/chat")
 def chat():
     return render_template("chats.html")
+
+@app.route("/chat/1")
+def conv():
+    return render_template("conversation.html")
