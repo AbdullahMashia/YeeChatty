@@ -10,7 +10,7 @@ html{
 }
 header{
     z-index: 100;
-    background-color: rgb(4, 55, 196);
+    background-color: rgb(20, 53, 145);
     position: relative;
 
     height: clamp(10vh, 15vh, 20vh);

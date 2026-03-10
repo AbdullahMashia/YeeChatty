@@ -30,3 +30,8 @@ def conv():
 @app.route("/request")
 def request():
     return render_template("request.html")
+
+
+@app.route("/find")
+def find():
+    return render_template("find.html")
