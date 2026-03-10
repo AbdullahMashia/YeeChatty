@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <link rel="StyleSheet" href="/static/css/request.css">
+    <title>Requests</title>
+{% endblock %}
+
+{%block login_status %}
+    <a style="color:white" href="/logout">logout</a>
+{%endblock%}
+
+{% block body %}
+<div id="request_screen">
+
+
+
+<ul id="request_square" >
+
+
+    <ul id="requests" >
+
+    </ul>
+
+
+</ul>
+
+<ul id="nav">
+    <li><button id="find">Find</button></li>
+    <li><button id="chat">Chats</button></li>
+    <li><button id="request">Request</button></li>
+</ul>
+
+</div>
+<script src="/static/js/request.js"></script>
+{% endblock%}

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <link rel="StyleSheet" href="/static/css/find.css">
+    <title>Requests</title>
+{% endblock %}
+
+{%block login_status %}
+    <a style="color:white" href="/logout">logout</a>
+{%endblock%}
+
+{% block body %}
+<div id="find_screen">
+
+
+
+<div id="find_square" >
+    <div id="online"><h2>Online Users</h2></div>
+
+
+    <ul id="users" >
+
+    </ul>
+
+
+</div>
+<div id="search">
+    <input id="search_input" type="text" placeholder="find" required>
+    <button id="search_but">find</button>
+
+</div>
+
+<ul id="nav">
+    <li><button id="find">Find</button></li>
+    <li><button id="chat">Chats</button></li>
+    <li><button id="request">Request</button></li>
+</ul>
+
+</div>
+<script src="/static/js/find.js"></script>
+{% endblock%}

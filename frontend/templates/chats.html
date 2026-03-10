@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <link rel="StyleSheet" href="static/css/chat.css">
+    <title>Register</title>
+{% endblock %}
+
+{%block login_status %}
+    <a style="color:white" href="/logout">logout</a>
+{%endblock%}
+
+{% block body %}
+<div id="chat_screen">
+
+
+<ul id="chats" >
+<li> first</li>
+<li>second</li>
+<li>third</li>
+<li> first</li>
+<li>second</li>
+<li>third</li>
+<li> first</li>
+<li>second</li>
+<li>third</li>
+<li> first</li>
+<li>second</li>
+<li>third</li>
+<li> first</li>
+<li>second</li>
+<li>third</li>
+<li> first</li>
+<li>second</li>
+<li>third</li>
+<li> first</li>
+<li>second</li>
+<li>third</li>
+
+</ul>
+
+<ul id="nav">
+    <li><button id="find">Find</button></li>
+    <li><button id="chat">Chats</button></li>
+    <li><button id="request">Request</button></li>
+</ul>
+
+</div>
+<script src="/static/static/js/chat.js"></script>
+{% endblock%}

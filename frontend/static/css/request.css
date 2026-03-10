@@ -1,0 +1,215 @@
+
+:root{
+    --sender:clamp(30vw,50vw,60vw);
+}
+#request_screen{
+    width:100vw;
+    height: 100vh;
+    top:-15vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+*{
+    color:white
+}
+
+
+/*request field */
+.in_req{
+    max-height: fit-content;
+    background-color: blue;
+    margin-bottom: 1vh;
+    text-align: center;
+    justify-content: space-between;
+    align-items:center;
+    font-size: clamp(0.5rem, 1.5rem,2rem);
+    display: flex;
+    flex-direction: row;
+    width:clamp(30vw,40vw,60vw);
+    text-align: center;
+    padding:0.5vw;
+    border-radius: 1vw;
+
+
+}
+.o_req{
+        max-height: fit-content;
+    background-color: blue;
+    margin-bottom: 1vh;
+    text-align: center;
+    justify-content: space-between;
+    align-items:center;
+    font-size: clamp(0.5rem, 1.5rem,2rem);
+    display: flex;
+    flex-direction: row;
+    width:clamp(30vw,40vw,60vw);
+    text-align: center;
+    padding:0.5vw;
+    border-radius: 1vw;
+}
+
+.in_req  .o_req {
+    text-align: center;
+    font-size: clamp(0.5rem,2.5rem,3rem);
+}
+#check{
+
+    display: flex;
+    align-self: flex-end;
+    justify-content: space-between;
+
+    max-height: fit-content;
+    font-size: clamp(0.4rem, 2.2rem,4rem);
+
+
+}
+#check h3{
+    font-size: clamp(0.2rem, 2rem,4rem);
+}
+
+
+#requests{
+    height:clamp(30vh,70vh,90vh) ;
+}
+
+
+
+#request_square{
+
+
+
+    /* width:clamp(30vw,80vw,90vw); */
+    margin-top: 20vh;
+    overflow-y: scroll;
+    scroll-snap-type: proximity;
+    scroll-behavior: initial;
+    scrollbar-width: 0;
+    height: clamp(30vh,70vh,90vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1vh;
+
+}
+
+
+
+
+
+
+
+/* navigation buttons */
+#nav{
+    display: flex;
+    position: relative;
+
+    flex-direction: row;
+    list-style: none;
+}
+
+#nav li button{
+
+    font-size: clamp(1.5rem, 2rem, 3.5rem);
+    border-radius: 2vw;
+   width: clamp(8vw,15vw,30vw);
+    list-style: none;
+    margin-right: 1vh;
+    height:clamp(5vh,8vh,15vh);
+    background-color: rgb(20, 53, 145);
+
+}
+#user_info{
+    width:20vw;
+    position: absolute;
+    text-align: center;
+    border-radius: 1vw;
+    color:darkgoldenrod;
+    left: calc(50% - 10vw);
+    padding:5px;
+    background-color:darkblue;
+}
+#nav li button:hover{
+
+    color:goldenrod;
+    box-shadow: 0px 0px 10px gold;
+    background-color: rgb(4, 20, 220);
+
+}
+#check h3:first-child:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgb(3, 248, 23);
+
+}
+h3:last-child:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgb(248, 3, 3);
+
+}
+h3:active{
+    box-shadow: 0px 0px 20px goldenrod;
+    border:2px solid gold;
+}
+#request{
+    color:goldenrod;
+    background-color: darkblue;
+    text-shadow: 0px 0px 5px gold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* responsive design condition*/
+@media (min-width:300px) and (max-width:800px)
+{
+    #nav li button{
+        font-size: clamp(0.4rem,1.2rem,2rem);
+        width:clamp(10vw,20vw,40vw);
+    }
+
+    input{
+
+    height:clamp(3vh,5vh,10vh);
+    border-radius: 3vw;
+    width:clamp(30vw,50vw,60vw) ;
+    font-size: clamp(0.5rem,1.2rem, 2rem);
+    text-align: center;
+}
+.in_req p{
+    font-size: clamp(0.5rem,1.3rem,2rem);
+}
+
+.in_req{
+
+    width:clamp(20vw,60vw,80vw);
+}
+.o_req{
+      width:clamp(20vw,60vw,80vw);
+}
+}
+@media (min-width:800px)
+{
+    #check h3{
+        font-size: clamp(2rem,3rem,4rem);
+    }
+    h3{
+        font-size: clamp(2rem,3rem,4rem);
+    }
+    .in-req p{
+         font-size: 4rem;
+
+    }
+
+}
