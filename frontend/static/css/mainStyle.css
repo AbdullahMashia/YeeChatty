@@ -5,7 +5,9 @@
 
 
 }
-
+html{
+    overflow: hidden;
+}
 header{
     z-index: 100;
     background-color: rgb(4, 55, 196);

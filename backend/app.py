@@ -16,3 +16,8 @@ def login():
 @app.route("/register")
 def register():
     return render_template("register.html")
+
+
+@app.route("/chat")
+def chat():
+    return render_template("chats.html")
