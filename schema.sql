@@ -3,11 +3,14 @@
 CREATE TABLE IF NOT EXISTS user (
   id INTEGER PRIMARY KEY,
   username VARCHAR (50) unique  not null,
-  password VARCHAR (100) not null,
-  email VARCHAR(100) unique,
-  country VARCHAR(30),
   full_name VARCHAR(50),
   age int,
+    country VARCHAR(30),
+    email VARCHAR(100) unique,
+  password VARCHAR (250) not null,
+
+
+
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 
@@ -49,7 +52,7 @@ CREATE TABLE IF NOT EXISTS messages(
   id INTEGER PRIMARY KEY,
   conversations_id int not null,
   sender_id int not null,
-  content varchar(200) not null default ' ',
+  content varchar(1024) not null default ' ',
   sent_at timestamp default CURRENT_TIMESTAMP,
   r_type varchar(10) default 'text',
   FOREIGN KEY(conversations_id) references conversations(id),

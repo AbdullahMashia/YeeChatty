@@ -17,9 +17,10 @@ def splash():
 
 @app.route("/login", methods=["POST","GET"])
 def login():
-    if  request.method == "post":
+    if  request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+
         if db_ob.auth_user(username,password):
             return redirect("/chat")
         return jsonify(err_con.wrong_creden)
@@ -31,21 +32,25 @@ def login():
 def register():
     return render_template("register.html")
 
+
 @login_required
 @app.route("/chat")
 def chat():
     return render_template("chats.html")
 
+
+@login_required
 @app.route("/chat/1")
 def conv():
     return render_template("conversation.html")
 
-
+@login_required
 @app.route("/request")
 def request_f():
     return render_template("request.html")
 
 
+@login_required
 @app.route("/find")
 def find():
     return render_template("find.html")

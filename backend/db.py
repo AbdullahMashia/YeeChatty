@@ -38,10 +38,15 @@ class MyDataB:
     def auth_user(self, username,password):
 
         with sqlite3.connect(db_path) as db:
+            db.row_factory = sqlite3.Row
             cur = db.cursor()
             valid_user = cur.execute("SELECT * FROM user WHERE username = ? ", (username,)).fetchone()
-            if check_password_hash(valid_user[5],password):
+            if valid_user is not None:
+                print(valid_user["age"])
+                print("**********************************")
+                if check_password_hash(valid_user["password"],password):
 
-                return valid_user[0]
+                    return valid_user[0]
+            print("user is here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             return False
 
