@@ -22,16 +22,16 @@ class MyDataB:
 
 
 
-    def add_user(self, user):
+    def add_user(self, r_user):
         with sqlite3.connect(db_path) as db:
                 cur = db.cursor()
-                cur.execute("INSERT INTO user (username,full_name,age,country,email,password) VALUES(?,?,?,?,?,?)",(user.username,user.full_name,user.age,user.country,user.email,user.password))
+                cur.execute("INSERT INTO user (username,full_name,age,country,email,password) VALUES(?,?,?,?,?,?)",(r_user.username,r_user.full_name,r_user.age,r_user.country,r_user.email,generate_password_hash(r_user.password)))
 
     def user_exist(self,username,email):
         with sqlite3.connect(db_path) as db:
             cur = db.cursor()
-            user =cur.execute("SELECT username FROM user WHERE username = ? OR email = ?",(username,email)).fetchone()
-            if user:
+            user =cur.execute("SELECT 1 FROM user WHERE username = ? OR email = ?",(username,email)).fetchone()
+            if user is not None:
                 return True
             return False
 

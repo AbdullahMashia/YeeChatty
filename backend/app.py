@@ -28,8 +28,32 @@ def login():
 
     return render_template("login.html")
 
-@app.route("/register")
+@app.route("/register",methods=["POST","GET"])
 def register():
+    if request.method == "POST":
+        print(".....................uername=")
+
+        username = request.form.get("username")
+
+        email = request.form.get("email")
+
+        if not db_ob.user_exist(username,email):
+            password = request.form.get("password")
+            cp =request.form.get("Cpassword")
+
+            if password != cp :
+                return jsonify(err_con.password_match)
+            r_user = {
+                "username":username,
+                "fullname":request.form.get("fullname"),
+                "age":request.form.get("age"),
+                "country":request.form.get("country"),
+                "email": email,
+                "password":password
+            }
+            db_ob.add_user(r_user)
+
+
     return render_template("register.html")
 
 

@@ -19,5 +19,9 @@ class Error_yee:
         'm': 'email or password not correct'
 
     }
+    password_match = {
+        'register':"failed",
+        'm': "password don't match"
+    }
 
 
