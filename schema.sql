@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS messages(
 );
 
 
-CREATE unique INDEX idx_CP_conversation  ON conversations_participants(user_id, conversations_id) ;
-CREATE  INDEX idx_MG_message ON messages(conversations_id,sent_at) ;
-CREATE UNIQUE INDEX idx_RM_request ON request_messaging(receiver_id, request_state,sender_id);
+CREATE unique INDEX IF NOT EXISTS  idx_CP_conversation  ON conversations_participants(user_id, conversations_id) ;
+CREATE  INDEX IF NOT EXISTS idx_MG_message ON messages(conversations_id,sent_at) ;
+CREATE UNIQUE INDEX  IF NOT EXISTS idx_RM_request ON request_messaging(receiver_id, request_state,sender_id);
 
 
 

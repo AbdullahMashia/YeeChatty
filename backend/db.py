@@ -17,7 +17,7 @@ class MyDataB:
         with sqlite3.connect(db_path) as db:
             with open(os.path.join(base_dir,"schema.sql")) as schema:
                 db.executescript(schema.read())
-                db.cursor().execute("INSERT INTO user (username,full_name,age,country,email,password) VALUES(?,?,?,?,?,?)",("admin","aw",0,"none","admin@yeechatty.com",admin_password))
+                db.cursor().execute("INSERT OR IGNORE INTO user (username,full_name,age,country,email,password) VALUES(?,?,?,?,?,?)",("admin","aw",0,"none","admin@yeechatty.com",admin_password))
 
 
 
