@@ -37,7 +37,7 @@
 }
 .o_req{
         max-height: fit-content;
-    background-color: blue;
+    background-color: rgb(20, 53, 145);
     margin-bottom: 1vh;
     text-align: center;
     justify-content: space-between;
@@ -68,11 +68,17 @@
 }
 #check h3{
     font-size: clamp(0.2rem, 2rem,4rem);
+
 }
 
 
 #requests{
     height:clamp(30vh,70vh,90vh) ;
+}
+h3{
+    background-color: rgb(7, 7, 92);
+    border: 0.1vw solid rgb(32, 66, 218);
+    margin-left: 0.4vw;
 }
 
 
@@ -203,9 +209,11 @@ h3:active{
 {
     #check h3{
         font-size: clamp(2rem,3rem,4rem);
+
     }
     h3{
         font-size: clamp(2rem,3rem,4rem);
+
     }
     .in-req p{
          font-size: 4rem;
