@@ -1,7 +1,10 @@
 from flask import Flask, render_template
+from db import MyDataB
 import os
 project_root = os.path.dirname(os.path.dirname(__file__))
 app = Flask(__name__, template_folder=os.path.join(project_root , "frontend/templates") ,   static_folder= os.path.join(project_root, "frontend/static"))
+
+db_con = MyDataB()
 
 
 @app.route("/")

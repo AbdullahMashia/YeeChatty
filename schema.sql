@@ -1,6 +1,6 @@
 
 
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
   id INTEGER PRIMARY KEY,
   username VARCHAR (50) unique  not null,
   password VARCHAR (100) not null,
@@ -14,14 +14,16 @@ CREATE TABLE user (
 
 
 );
-CREATE TABLE conversations(
+CREATE TABLE IF NOT EXISTS conversations(
   id INTEGER PRIMARY KEY,
   encryption_key varchar(50) not null,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  last_message_read FOREIGN KEY  REFERENCES messages(id)
+  last_message_read INTEGER ,
+
+  FOREIGN KEY (last_message_read)  REFERENCES messages(id)
 );
 
-CREATE  TABLE conversations_participants (
+CREATE  TABLE IF NOT EXISTS conversations_participants (
   user_id int not null,
   conversations_id int not null,
   joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -32,7 +34,7 @@ CREATE  TABLE conversations_participants (
   FOREIGN KEY (conversations_id) references conversations(id)
 );
 
-CREATE TABLE request_messaging(
+CREATE TABLE IF NOT EXISTS request_messaging(
   id INTEGER PRIMARY KEY,
   sender_id int not null,
   receiver_id int not null,
@@ -43,7 +45,7 @@ CREATE TABLE request_messaging(
  FOREIGN KEY(receiver_id) references user(id)
 
 );
-CREATE TABLE messages(
+CREATE TABLE IF NOT EXISTS messages(
   id INTEGER PRIMARY KEY,
   conversations_id int not null,
   sender_id int not null,
@@ -55,9 +57,9 @@ CREATE TABLE messages(
 );
 
 
-CREATE INDEX idx_CP_conversation  ON conversations_participants(user_id, conversations_id) unique;
-CREATE INDEX idx_MG_message ON messages(conversations_id,sent_at) ;
-CREATE INDEX idx_RM_request ON request_messaging(receiver_id, request_state,sender_id) unique;
+CREATE unique INDEX idx_CP_conversation  ON conversations_participants(user_id, conversations_id) ;
+CREATE  INDEX idx_MG_message ON messages(conversations_id,sent_at) ;
+CREATE UNIQUE INDEX idx_RM_request ON request_messaging(receiver_id, request_state,sender_id);
 
 
 
