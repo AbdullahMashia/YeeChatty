@@ -111,7 +111,7 @@ h3{
 #nav{
     display: flex;
     position: relative;
-
+    top:-0.5vh;
     flex-direction: row;
     list-style: none;
 }

@@ -9,7 +9,7 @@
 }
 #splash_article{
     position: relative;
-    top:10vh;
+    top:5vh;
     display: flex;
     flex-direction: row;
     justify-content:space-between;
@@ -50,14 +50,15 @@ section{
 
     align-items: center;
     justify-content: space-around;
-    height: 100vh;
+    height: 100%;
     flex-direction: column;
 }
 
 #join_but{
-    width:clamp(10vw,15vw,35vw);
+    width:fit-content;
     color:white;
     background-color: rgb(4, 55, 196);
+    padding:1vw;
 
 
     border-radius: 3vw;
@@ -88,8 +89,9 @@ section{
 
 }
 *{
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
+
 #splash_article{
     justify-content: center;
 
@@ -102,11 +104,12 @@ section{
 }
 #login_logout{
     height: fit-content;
+    padding:1vw;
 }
 }
 
 
-@media (min-width: 800px)   {
+@media (min-width: 900px) and (max-width:1500px)  {
     #intro{
         top:10vh;
         font-size: 3rem;
@@ -116,6 +119,39 @@ section{
 
     section{
         font-size: 1.5rem;
+        margin-top: 10vh;
     }
 
+    *{
+        font-size:clamp(1.5rem,1.rem,3rem);
+    }
+    #login_logout{
+    height: fit-content;
+    padding:1vw;
+}
+
+}
+
+@media (min-width:2001px){
+       section{
+        font-size: 1.5rem;
+        margin-top: -20vh;
+
+    }
+
+    #intro{
+        font-size: 3.3rem;
+    }
+
+}
+@media( min-width:1600px) and (max-width:2000px)
+{
+    #intro{
+        font-size: 3.3rem;
+    }
+
+          section{
+        font-size: 1.5rem;
+        margin-top: 10vh;
+    }
 }

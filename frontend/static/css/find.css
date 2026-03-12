@@ -131,7 +131,7 @@
 #nav{
     display: flex;
     position: relative;
-
+    top:3vh;
     flex-direction: row;
     list-style: none;
 }
@@ -220,7 +220,7 @@ p:active{
 {
 
     p{
-        font-size: clamp(2rem,2.5rem,4rem);
+        font-size: clamp(1.5rem,2rem,4rem);
     }
 
 
