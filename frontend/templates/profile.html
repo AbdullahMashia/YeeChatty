@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <link rel="StyleSheet" href="static/css/profile.css">
+    <title>Profile</title>
+{% endblock %}
+
+{%block login_status %}
+    <a style="color:white" href="/chat">back</a>
+{%endblock%}
+
+{% block body %}
+<div id="profile_screen">
+
+<h1> My Profile</h1>
+
+<div id="user_data">
+    <ul>
+        <li>
+            <label>username</label>
+             <div>{{user_dataT["username"]}}</div>
+        </li>
+        <li>
+            <label>full name</label>
+            <div>{{user_dataT["full_name"]}}</div>
+        </li>
+        <li>
+            <label>age</label>
+            <div>{{user_dataT["age"]}}</div>
+        </li>
+        <li>
+            <label>email</label>
+            <div>{{user_dataT["email"]}}</div>
+        </li>
+        <li>
+            <label>country</label>
+            <div>{{user_dataT["country"]}}</div>
+        </li>
+    </ul>
+
+
+
+
+</div>
+
+</div>
+<script src="/static/static/js/profile.js"></script>
+{% endblock%}

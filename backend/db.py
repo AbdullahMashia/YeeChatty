@@ -21,12 +21,16 @@ class MyDataB:
 
 
 
-
+# adding new users
     def add_user(self, r_user):
         with sqlite3.connect(db_path) as db:
                 cur = db.cursor()
-                cur.execute("INSERT INTO user (username,full_name,age,country,email,password) VALUES(?,?,?,?,?,?)",(r_user.username,r_user.full_name,r_user.age,r_user.country,r_user.email,generate_password_hash(r_user.password)))
+                cur.execute("INSERT INTO user (username,full_name,age,country,email,password) VALUES(?,?,?,?,?,?)",(r_user['username'],r_user['fullname'],r_user['age'],r_user['country'],r_user['email'],generate_password_hash(r_user['password'])))
+                user_id = cur.execute("SELECT id FROM user WHERE username = ?",(r_user["username"],)).fetchone()[0]
+                return user_id
 
+
+# checking if uesr already exists (username, password)
     def user_exist(self,username,email):
         with sqlite3.connect(db_path) as db:
             cur = db.cursor()
@@ -35,6 +39,7 @@ class MyDataB:
                 return True
             return False
 
+# authenticate users
     def auth_user(self, username,password):
 
         with sqlite3.connect(db_path) as db:
@@ -42,11 +47,20 @@ class MyDataB:
             cur = db.cursor()
             valid_user = cur.execute("SELECT * FROM user WHERE username = ? ", (username,)).fetchone()
             if valid_user is not None:
-                print(valid_user["age"])
+
                 print("**********************************")
                 if check_password_hash(valid_user["password"],password):
-
-                    return valid_user[0]
+                    print("user_id=>",valid_user["id"])
+                    return valid_user["id"]
             print("user is here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             return False
+
+
+    def user_data(self,user_id):
+        with sqlite3.connect(db_path) as db:
+            db.row_factory = sqlite3.Row
+            cur = db.cursor()
+            user_data = cur.execute("SELECT * FROM user WHERE id = ?",(user_id,)).fetchone()
+
+            return user_data
 

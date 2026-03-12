@@ -1,0 +1,134 @@
+
+:root{
+    --sender:clamp(30vw,50vw,60vw);
+}
+#profile_screen{
+    width:100vw;
+    height: 100vh;
+
+    top:-15vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+*{
+    color:white
+}
+
+
+
+
+
+
+
+#user_data{
+    width:clamp(50vw,70vw,80vw);
+    display: flex;
+
+    justify-content: center;
+    font-size: clamp(1rem,1.8rem,2.2rem);
+
+     height: clamp(30vh,60vh,80vh);
+
+
+}
+div ul li{
+    border:0.2vw solid blue;
+    width:clamp(30vw,50vw,50vw);
+    display: flex;
+    align-content: space-around;
+    justify-content: space-between;
+    padding:1vw;
+    border-radius: 2vw;
+    flex-direction: row;
+}
+li label{
+    width:clamp(10vw,20vw,20vw);
+        padding:2vw;
+    border-radius: 2vw;
+    background-color: blue;
+}
+li div{
+    font-size: clamp(0.5rem,1.8rem,2rem);
+    background-color: grey;
+    width: auto;
+        padding:2vw;
+    border-radius: 2vw;
+    color:blue;
+    font-weight: bolder;
+
+}
+
+div ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+
+/* where users will appear */
+
+
+
+
+
+
+/* responsive design condition*/
+@media (min-width:300px) and (max-width:800px)
+{
+    div ul li{
+        width:clamp(40vw,60vw,60vw);
+    }
+ li label{
+    width:clamp(10vw,20vw,20vw);
+    font-size: clamp(0.5rem,1rem,2rem);
+
+        padding:2vw;
+    border-radius: 2vw;
+    background-color: blue;
+}
+li div{
+    font-size: clamp(0.5rem,1rem,2rem);
+    background-color: grey;
+    width: auto;
+        padding:2vw;
+    border-radius: 2vw;
+    color:blue;
+    font-weight: bolder;
+
+}
+
+}
+
+/*laptops */
+@media (min-width:800px)
+{
+
+    p{
+        font-size: clamp(2rem,2.5rem,4rem);
+    }
+
+
+}
+@media (min-width:1500px)
+{
+    div ul li{
+
+        height:clamp(5vh,12vh,15vh);
+        padding:0.2vw;
+    }
+    ul li label{
+        height:clamp(5vh,10vh,15vh);
+    }
+    ul li div{
+        height:clamp(5vh,10vh,15vh);
+    }
+}
