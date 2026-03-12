@@ -92,9 +92,16 @@ section{
 }
 #splash_article{
     justify-content: center;
+
 }
 #splash_image{
     display: none;
+}
+#login_logout a{
+    font-size: clamp(0.5rem,1rem,2rem);
+}
+#login_logout{
+    height: fit-content;
 }
 }
 

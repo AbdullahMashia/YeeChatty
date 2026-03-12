@@ -1,6 +1,9 @@
 import os
 import sqlite3
 from werkzeug.security import generate_password_hash,check_password_hash
+from error import Error_yee
+
+err_db = Error_yee()
 
 base_dir = os.path.dirname(os.path.dirname(__file__))
 db_path = os.path.join(base_dir,"data","yeechatty.db")
@@ -48,28 +51,68 @@ class MyDataB:
             valid_user = cur.execute("SELECT * FROM user WHERE username = ? ", (username,)).fetchone()
             if valid_user is not None:
 
-                print("**********************************")
                 if check_password_hash(valid_user["password"],password):
-                    print("user_id=>",valid_user["id"])
                     return valid_user["id"]
-            print("user is here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
             return False
 
 
-    def user_data(self,user_id):
+    def user_data(self,user_name,owner_id):
         with sqlite3.connect(db_path) as db:
             db.row_factory = sqlite3.Row
             cur = db.cursor()
-            user_data = cur.execute("SELECT * FROM user WHERE id = ?",(user_id,)).fetchone()
+            user_id= cur.execute("SELECT id FROM user WHERE username = ? AND id != ?",(user_name,owner_id)).fetchone()
+            if user_id is not None:
 
-            return user_data
 
+                if not self.request_exist(owner_id, user_id["id"]):
+                    user_data = cur.execute("SELECT username,id FROM user WHERE username = ?",(user_name,)).fetchone()
+                    user_data_j = dict(user_data)
+                    user_data_j["success"]= True
+                    return user_data_j
 
-    def online_users(self):
+                return err_db.user_already_found
+
+            return err_db.user_not_found
+
+    def user_prof(self, user_id):
+            with sqlite3.connect(db_path) as db:
+                db.row_factory = sqlite3.Row
+                cur = db.cursor()
+                print("user_id==>>>>>",user_id)
+                user = cur.execute("SELECT * FROM user WHERE id = ?",(user_id,)).fetchone()
+                print("user_in_db===>",user)
+                if user is not None:
+                    return user
+
+                return {"m":"loading"}
+
+    def online_users(self,user_id):
         with sqlite3.connect(db_path) as db:
             db.row_factory = sqlite3.Row
             cur = db.cursor()
-            all_users = cur.execute("SELECT id,username FROM user").fetchall()
+            all_users = cur.execute("SELECT id,username FROM user WHERE id != ? And id NOT IN (SELECT sender_id FROM request_messaging WHERE receiver_id = ?) AND id NOT IN ( SELECT receiver_id FROM request_messaging WHERE sender_id = ?) ",(user_id,user_id,user_id)).fetchall()
             all_u = [dict(row) for row in all_users]
             return all_u
+
+    def request_exist(self,send_id, rec_id):
+        with sqlite3.connect(db_path) as db:
+            cur = db.cursor()
+            request = cur.execute("SELECT 1 FROM request_messaging WHERE sender_id = ? AND receiver_id = ?",(send_id,rec_id)).fetchone()
+
+            return request is not None
+
+    def send_request(self,send_id,rec_ic):
+        with sqlite3.connect(db_path) as db:
+            cur =db.cursor()
+            if send_id != rec_ic:
+                try:
+                    cur.execute("INSERT INTO request_messaging (sender_id,receiver_id) VALUES(?,?)",(send_id,rec_ic))
+                    db.commit()
+
+                    return True
+                except:
+                    return False
+            return err_db.user_reverse_req
+
 

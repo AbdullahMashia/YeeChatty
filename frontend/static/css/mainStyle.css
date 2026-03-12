@@ -59,7 +59,9 @@ header{
 }
 
 #login_logout{
-    visibility: hidden;
+width:fit-content;
+padding:1vw;
+
 }
 
 }
