@@ -64,3 +64,12 @@ class MyDataB:
 
             return user_data
 
+
+    def online_users(self):
+        with sqlite3.connect(db_path) as db:
+            db.row_factory = sqlite3.Row
+            cur = db.cursor()
+            all_users = cur.execute("SELECT id,username FROM user").fetchall()
+            all_u = [dict(row) for row in all_users]
+            return all_u
+

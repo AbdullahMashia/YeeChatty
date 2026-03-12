@@ -108,3 +108,27 @@ def logout():
 def profile():
     user_data = db_ob.user_data(session["user_id"])
     return render_template("profile.html",user_dataT=user_data)
+
+
+#/apis
+
+@app.route("/api/users/find")
+@login_required
+def find_users():
+    users_f = [dict(row) for row in db_ob.online_users() if row['id'] != session["user_id"]]
+
+
+
+    print(users_f)
+    return (jsonify(users_f))
+
+
+
+@app.route("/api/requests",methods=["POST","GET"])
+@login_required
+def requests_handler():
+    data_s = request.get_json(force=True)
+
+
+    return jsonify(reso)
+
