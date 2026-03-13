@@ -80,7 +80,7 @@ def chat():
 
 
 @login_required
-@app.route("/chat/1")
+@app.route("/conversation")
 def conv():
     return render_template("conversation.html")
 
@@ -125,7 +125,6 @@ def find_users():
 
     else:
         data_f = request.get_json(force=True)
-
         user_f = db_ob.user_data(data_f["username"], session["user_id"])
 
 
@@ -139,9 +138,9 @@ def find_users():
 
 
 
-@app.route("/api/requests",methods=["POST","GET"])
+@app.route("/api/requests/send",methods=["POST","GET"])
 @login_required
-def requests_handler():
+def requests_sender():
     data_s = request.get_json(force=True)
 
 
@@ -152,10 +151,44 @@ def requests_handler():
     return err_con.request_sent
 
 
+@app.route("/api/requests",)
+@login_required
+def load_requests():
+    all_request = db_ob.all_user_req(session["user_id"])
+    print("reqqqqq === >>", all_request)
+    return jsonify(all_request)
 
 
 
 
 
+@app.route("/api/request/handler", methods=["POST","GET"])
+@login_required
+def request_hanlder():
+    req = request.get_json()
+    type = req["type"]
+
+
+    res = db_ob.accept_request(req["request_id"],session["user_id"],type)
+
+    return jsonify(res)
+
+
+
+
+
+@app.route("/api/chats")
+@login_required
+def load_chats():
+    chats = db_ob.user_chats(session["user_id"])
+
+    return jsonify(chats)
+
+
+
+
+@app.route("/api/conversations/room")
+@login_required
+def load_messages():
 
 

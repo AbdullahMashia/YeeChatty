@@ -117,7 +117,7 @@ async function requset_sender(users_arr,e){
 
             };
 
-            let response = await fetch("/api/requests", {
+            let response = await fetch("/api/requests/send", {
                 method: "POST",
                 heaers:{
                    "Content-Type": "application/json",

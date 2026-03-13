@@ -65,3 +65,8 @@ for(let i=0 ; i<30; i++)
     messages.appendChild(message_container);
 
 }
+
+
+async function message_loader(){
+    let res = await fetch(`/api/conversations/${conv_id}`)
+}

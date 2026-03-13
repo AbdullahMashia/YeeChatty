@@ -8,7 +8,7 @@ err_db = Error_yee()
 base_dir = os.path.dirname(os.path.dirname(__file__))
 db_path = os.path.join(base_dir,"data","yeechatty.db")
 
-
+encryptino_key = 24234231341451
 
 class MyDataB:
 
@@ -79,9 +79,9 @@ class MyDataB:
             with sqlite3.connect(db_path) as db:
                 db.row_factory = sqlite3.Row
                 cur = db.cursor()
-                print("user_id==>>>>>",user_id)
+
                 user = cur.execute("SELECT * FROM user WHERE id = ?",(user_id,)).fetchone()
-                print("user_in_db===>",user)
+
                 if user is not None:
                     return user
 
@@ -98,7 +98,7 @@ class MyDataB:
     def request_exist(self,send_id, rec_id):
         with sqlite3.connect(db_path) as db:
             cur = db.cursor()
-            request = cur.execute("SELECT 1 FROM request_messaging WHERE sender_id = ? AND receiver_id = ?",(send_id,rec_id)).fetchone()
+            request = cur.execute("SELECT 1 FROM request_messaging WHERE sender_id = ? AND receiver_id = ? OR sender_id =? AND receiver_id =?",(send_id,rec_id,rec_id,send_id)).fetchone()
 
             return request is not None
 
@@ -114,5 +114,95 @@ class MyDataB:
                 except:
                     return False
             return err_db.user_reverse_req
+
+
+# requests loader
+    def all_user_req(self,user_id):
+        with sqlite3.connect(db_path) as db:
+            db.row_factory = sqlite3.Row
+            cur =db.cursor()
+
+            all_req = cur.execute(" select request_id,user_id,type,request_state,request_time,user.username  from (select request_messaging.request_state,request_time,sender_id as user_id ,id as request_id,'incoming' as type  FROM request_messaging where receiver_id = ? union all select request_messaging.request_state,request_time,receiver_id as user_id ,id as request_id,'outgoing' as type  FROM request_messaging where sender_id = ?) as requests join user ON user.id = user_id WHERE request_state =? Group by request_id;",(user_id,user_id,"pending")).fetchall()
+
+            if all_req is not None and len(all_req) > 0:
+                all_req = [dict(req) for req in all_req]
+
+                return all_req
+
+            return err_db.not_request_yet
+
+
+    def accept_request(self,request_id,user_id,type):
+        with sqlite3.connect(db_path) as db:
+            db.row_factory = sqlite3.Row
+            cur =db.cursor()
+
+            print("request_id = ",request_id)
+            print("user_id = >",user_id)
+            #checking if user is part of the request
+            r_req = cur.execute("SELECT *  from request_messaging WHERE id = ? AND receiver_id = ? AND request_state = ?",(request_id,user_id, "pending")).fetchone()
+            s_req = cur.execute("SELECT * FROM request_messaging WHERE id = ? AND sender_id = ? AND request_state = ?",(request_id,user_id, "pending")).fetchone()
+            print("request === >>>",s_req)
+            if r_req is not None:
+                if type =="accept":
+
+                        cur.execute("UPDATE  request_messaging SET request_state = 'accepted' WHERE id = ?",(request_id)).fetchone()
+
+
+
+                        cur.execute("INSERT  INTO conversations (encryption_key) VALUES (?)",(encryptino_key,))
+                        conv_id = cur.lastrowid
+                        cur.execute("INSERT  INTO conversations_participants (user_id, conversations_id) VALUES (?,?)", (user_id,conv_id))
+                        cur.execute("INSERT  INTO conversations_participants (user_id, conversations_id) VALUES (?,?)",(req["sender_id"],conv_id))
+
+                        return {"success":True,"m":"request accepted successfully"}
+
+
+
+                elif type == "deny":
+                    conv_id =  cur.execute("UPDATE  request_messaging SET request_state = 'denied' WHERE id = ?",(request_id)).fetchone()
+
+                    if cur.rowcount >0:
+                        return {"type":"request deny", "m":"request has been successfully denied"}
+
+                    return {"success":False,"m":"failed to deny the request"}
+
+
+            elif r_req is None and s_req is not None:
+                    cur.execute("DELETE FROM request_messaging WHERE id = ?",(request_id,)).fetchone()
+
+                    if cur.rowcount >0:
+                        return {"type":"request cancled", "m":"request has been successfully canceld"}
+
+                    return {"success":False,"m":"failed to cancel the request"}
+
+            return err_db.request_not_found
+
+
+
+
+    def user_chats(self, user_id):
+        with sqlite3.connect(db_path) as db:
+            db.row_factory = sqlite3.Row
+            cur =db.cursor()
+
+            chats = cur.execute("""SELECT user.username, s.conversations_id
+                                FROM user
+                                JOIN conversations_participants as s ON user.id = s.user_id
+                                WHERE user_id != ? AND conversations_id IN
+
+
+                                (SELECT conversations_id FROM conversations_participants WHERE user_id =?) """,(user_id,user_id)).fetchall()
+
+            if len(chats)>0:
+                print(chats)
+                chats = [dict(r) for r in chats]
+                print(chats)
+                return chats
+
+            else:
+               return  err_db.no_chatsFound
+
+
 
 
