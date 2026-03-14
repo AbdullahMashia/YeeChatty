@@ -65,3 +65,14 @@ class Error_yee:
         "success":False,
         "m": "There is no chats YET"
     }
+    no_messages_yet = {
+        "type":"load messages",
+        "success":False,
+        "m":"There is no messages yet"
+    }
+
+    conv_not_exist = {
+        "type": "load messages",
+        "success":False,
+        "m": "Room Does not exist"
+    }

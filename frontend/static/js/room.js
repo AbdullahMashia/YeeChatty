@@ -1,5 +1,7 @@
 
+
 let messages = document.getElementById("messages");
+let chat_square = document.getElementById("chat_square");
 
 let mess = [
      "hello", "hi","what is up?","how are you?","great what about you?","awsome",
@@ -18,22 +20,37 @@ window.addEventListener("load",message_loader);
 let date = "2020 25 32 mon 14:32 pm";
 
 
-function builder(messages)
+function builder(messages_load)
 {
+    if (!Array.isArray(messages_load))
+    {
+        let m = document.createElement("li");
+        m.innerText = messages_load["m"];
+        m.style.padding = "2vw";
+        m.style.backgroundColor = "grey";
+        m.style.fontSize = "2rem";
+        messages.style +="display:fixed;     align-items: center;justify-content: center;";
+        messages.appendChild(m);
+        chat_square.style.background="transparent";
+        return;
 
-        for(let i=0 ; i<30; i++)
-        {
+
+    }
+
+      messages_load.forEach(element => {
+
+
 
             let message_container = document.createElement("li");
             let message= document.createElement("p");
 
 
             let m_info = document.createElement("p");
-            if((i+1)%2==0)
+            if(element["type"]== "rec")
             {
             message.classList.add("recv_me");
             message_container.classList.add("recv_c");
-            m_info.innerText=date;
+            m_info.innerText=element["sent_at"];
 
 
 
@@ -49,7 +66,7 @@ function builder(messages)
             else{
                 message.classList.add("my_m");
                 message_container.classList.add("my_c");
-                m_info.innerText=date;
+                m_info.innerText=element["sent_at"]
 
 
 
@@ -58,7 +75,7 @@ function builder(messages)
             }
 
             m_info.classList.add("m_info");
-            message.innerText =mess[i];
+            message.innerText =element["content"];
             message_container.appendChild(message);
 
 
@@ -67,7 +84,12 @@ function builder(messages)
 
             messages.appendChild(message_container);
 
-        }
+
+    });
+
+
+
+
 
 }
 
@@ -75,6 +97,24 @@ function builder(messages)
 
 async function message_loader(){
     let res = await fetch(`/api/chats/room`);
-    let ser_res = await res.text();
-    console.log(ser_res);
+    let ser_res = await res.json();
+
+    builder(ser_res);
+    console.log("response=>",ser_res);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

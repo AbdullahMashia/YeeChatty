@@ -44,14 +44,31 @@ function builder(all_chats){
 
 
        all_chats.forEach(element => {
-            //request componenets
+            //chat componenets
             let req = document.createElement("li");
             let user = document.createElement("p");
 
             req.appendChild(user);
             user.innerText = element["username"];
+            let ccc_id = element["conversations_id"];
+            console.log("conv_id =",ccc_id);
 
-           req.addEventListener("click",()=>location.replace("/conversation"));
+
+           req.addEventListener("click",async function open_room(){
+
+                let res = await fetch("/room",{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({"type":"open_room","conv_id":element["conversations_id"]})
+                });
+
+
+                location.replace("/room");
+
+            });
 
 
 
@@ -68,5 +85,7 @@ function builder(all_chats){
 
 
 }
+
+
 
 

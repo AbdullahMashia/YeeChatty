@@ -33,7 +33,7 @@ def login():
 
             session["username"] = username
             session["user_id"]  = user_id
-            return redirect("/chat")
+            return redirect("/chats")
         return jsonify(err_con.wrong_creden)
 
 
@@ -66,23 +66,29 @@ def register():
             session["username"] = username
             session["user_id"]  =user_id
 
-            return redirect("/chat")
+            return redirect("/chats")
 
 
     return render_template("register.html")
 
 
-@app.route("/chat")
+#chat page
+@app.route("/chats")
 @login_required
 def chat():
-    print(session)
+
     return render_template("chats.html")
 
 
 @login_required
-@app.route("/conversation")
-def conv():
-    return render_template("conversation.html")
+@app.route("/room",methods=["POST","GET"])
+def room():
+    if request.method =="POST":
+        session["conv_id"] = request.get_json(force=True)["conv_id"]
+        print("loaded+==>",request.get_json())
+        return jsonify({"type":"open_room","m":"opened successfully"})
+
+    return render_template("room.html")
 
 
 @app.route("/request")
@@ -137,7 +143,7 @@ def find_users():
 
 
 
-
+#sending requests in find page
 @app.route("/api/requests/send",methods=["POST","GET"])
 @login_required
 def requests_sender():
@@ -150,6 +156,7 @@ def requests_sender():
 
     return err_con.request_sent
 
+# returns all requests
 
 @app.route("/api/requests",)
 @login_required
@@ -161,7 +168,7 @@ def load_requests():
 
 
 
-
+# handles the actions of requests
 @app.route("/api/request/handler", methods=["POST","GET"])
 @login_required
 def request_hanlder():
@@ -175,8 +182,8 @@ def request_hanlder():
 
 
 
-
-
+#chats content
+#returns all rooms
 @app.route("/api/chats")
 @login_required
 def load_chats():
@@ -187,8 +194,12 @@ def load_chats():
 
 
 
-@app.route("/api/conversations/room")
+@app.route("/api/chats/room")
 @login_required
 def load_messages():
+    messages = db_ob.load_messages(session["conv_id"],session["user_id"])
+    print(messages)
 
+
+    return jsonify(messages)
 

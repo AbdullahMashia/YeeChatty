@@ -153,7 +153,7 @@ class MyDataB:
                         cur.execute("INSERT  INTO conversations (encryption_key) VALUES (?)",(encryptino_key,))
                         conv_id = cur.lastrowid
                         cur.execute("INSERT  INTO conversations_participants (user_id, conversations_id) VALUES (?,?)", (user_id,conv_id))
-                        cur.execute("INSERT  INTO conversations_participants (user_id, conversations_id) VALUES (?,?)",(req["sender_id"],conv_id))
+                        cur.execute("INSERT  INTO conversations_participants (user_id, conversations_id) VALUES (?,?)",(r_req["sender_id"],conv_id))
 
                         return {"success":True,"m":"request accepted successfully"}
 
@@ -205,4 +205,28 @@ class MyDataB:
 
 
 
+
+    def load_messages(self,conv_id,user_id):
+        with sqlite3.connect(db_path) as db:
+            db.row_factory = sqlite3.Row
+            cur =db.cursor()
+
+            checking = cur.execute("SELECT * FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,conv_id)).fetchone()
+            if checking is not None:
+                messages = cur.execute("""
+                                       SELECT u.username, m.content,m.sent_at,m.sender_id FROM user as u
+                                       JOIN (SELECT * FROM messages WHERE conversations_id = ?) AS m
+                                       ON u.id = m.sender_id""",(conv_id,)).fetchall()
+
+                if len(messages) > 0:
+                    messages = [dict(m) for m in messages]
+                    for m in messages:
+                        if m["sender_id"] == user_id:
+                            m["type"] = "sent"
+                        else:
+                            m["type"] = "rec"
+                    return messages
+
+                return err_db.no_messages_yet
+            return err_db.conv_not_exist
 
