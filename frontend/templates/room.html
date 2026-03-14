@@ -2,7 +2,7 @@
 
 
 {% block title %}
-    <link rel="StyleSheet" href="/static/css/conv.css">
+    <link rel="StyleSheet" href="/static/css/room.css">
     <title>Register</title>
 {% endblock %}
 
@@ -31,11 +31,10 @@
 </ul>
 
 <ul id="nav">
-    <li><button id="find">Find</button></li>
-    <li><button id="chat">Chats</button></li>
-    <li><button id="request">Request</button></li>
+    <li><a href="/find"><button id="find" onclick="find_f()">Find</button></a></li>
+    <li><a href="/chats"><button id="chat" onclick="find_f()">Chats</button></a></li>
+    <li><a href="/request"><button id="request" onclick="find_f()">Requests</button></a></li>
 </ul>
-
 </div>
-<script src="/static/js/conv.js"></script>
+<script src="/static/js/room.js"></script>
 {% endblock%}

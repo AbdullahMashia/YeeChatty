@@ -2,10 +2,16 @@
 
 
 let chats = document.getElementById("chats");
-
+let intro_m = document.createElement("li");
 
 
 window.addEventListener("load", chat_loader);
+
+
+
+
+
+
 
 
 
@@ -39,6 +45,15 @@ function builder(all_chats){
     {
 
         intro_m.innerText = all_chats["m"];
+        // styling empty chats message
+
+
+        intro_m.style.backgroundColor = "grey";
+        intro_m.style.fontSize = "2rem";
+        intro_m.style.width="fit-content";
+        intro_m.style.padding = "3vw";
+        chats.style = "display:flex;align-items:center; justify-content:center";
+        chats.appendChild(intro_m);
         return;
     }
 

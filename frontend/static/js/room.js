@@ -29,7 +29,7 @@ function builder(messages_load)
         m.style.padding = "2vw";
         m.style.backgroundColor = "grey";
         m.style.fontSize = "2rem";
-        messages.style +="display:fixed;     align-items: center;justify-content: center;";
+        messages.style +="     align-items: center;justify-content: center;";
         messages.appendChild(m);
         chat_square.style.background="transparent";
         return;
