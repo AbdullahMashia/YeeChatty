@@ -220,11 +220,14 @@ class MyDataB:
 
                 if len(messages) > 0:
                     messages = [dict(m) for m in messages]
-                    for m in messages:
-                        if m["sender_id"] == user_id:
-                            m["type"] = "sent"
+                    messages.insert(0,{"conv_id":conv_id})
+
+                    for i in range(1,len(messages)):
+
+                        if messages[i]["sender_id"] == user_id:
+                            messages[i]["type"] = "sent"
                         else:
-                            m["type"] = "rec"
+                            messages[i]["type"] = "rec"
                     return messages
 
                 return err_db.no_messages_yet

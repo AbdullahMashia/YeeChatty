@@ -1,3 +1,5 @@
+
+print("88888888888888888888888888888888888888888888888888888888888888888888888888888888")
 from flask import Flask, render_template,jsonify,request, redirect,session
 from db import MyDataB
 from error import Error_yee
@@ -5,18 +7,40 @@ from flask_session import Session
 from auth import login_required
 from response import Response
 import os
+from flask_socketio import SocketIO
+
+
+
+
+
 project_root = os.path.dirname(os.path.dirname(__file__))
 app = Flask(__name__, template_folder=os.path.join(project_root , "frontend/templates") ,   static_folder= os.path.join(project_root, "frontend/static"))
 
+my_soc = SocketIO(app,cors_allowed_origins="*")
+#initializing socket ob
+
+
+#objects:
 db_ob = MyDataB()
 
 err_con = Error_yee()
 res_ob = Response()
 
 
+
+
+
 app.config["SESSION_TYPE"] = "filesystem"
 
 Session(app)
+
+
+
+
+
+
+
+
 @app.route("/")
 def splash():
     return render_template("splash.html")
@@ -85,7 +109,7 @@ def chat():
 def room():
     if request.method =="POST":
         session["conv_id"] = request.get_json(force=True)["conv_id"]
-        print("loaded+==>",request.get_json())
+
         return jsonify({"type":"open_room","m":"opened successfully"})
 
     return render_template("room.html")
@@ -197,9 +221,20 @@ def load_chats():
 @app.route("/api/chats/room")
 @login_required
 def load_messages():
+
+
     messages = db_ob.load_messages(session["conv_id"],session["user_id"])
-    print(messages)
+
+
 
 
     return jsonify(messages)
 
+
+
+
+
+
+if __name__ == "__main__":
+    print('strarted debugging')
+    my_soc.run(app,debug=True)
