@@ -1,5 +1,3 @@
-
-print("88888888888888888888888888888888888888888888888888888888888888888888888888888888")
 from flask import Flask, render_template,jsonify,request, redirect,session
 from db import MyDataB
 from error import Error_yee
@@ -7,16 +5,15 @@ from flask_session import Session
 from auth import login_required
 from response import Response
 import os
+from exten import my_sock_ob
 from flask_socketio import SocketIO
+from config import ini_app
+import my_sock
 
 
+app = ini_app()
 
-
-
-project_root = os.path.dirname(os.path.dirname(__file__))
-app = Flask(__name__, template_folder=os.path.join(project_root , "frontend/templates") ,   static_folder= os.path.join(project_root, "frontend/static"))
-
-my_soc = SocketIO(app,cors_allowed_origins="*")
+my_sock_ob.init_app(app, cors_allowed_origins="*")
 #initializing socket ob
 
 
@@ -32,7 +29,6 @@ res_ob = Response()
 
 app.config["SESSION_TYPE"] = "filesystem"
 
-Session(app)
 
 
 
@@ -237,4 +233,4 @@ def load_messages():
 
 if __name__ == "__main__":
     print('strarted debugging')
-    my_soc.run(app,debug=True)
+    my_sock_ob.run(app,debug=True)

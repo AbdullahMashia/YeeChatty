@@ -211,25 +211,48 @@ class MyDataB:
             db.row_factory = sqlite3.Row
             cur =db.cursor()
 
-            checking = cur.execute("SELECT * FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,conv_id)).fetchone()
+
+            checking = cur.execute("SELECT 1 FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,conv_id)).fetchone()
             if checking is not None:
+                username = cur.execute("select username from user where id = ?",(user_id,)).fetchone()["username"]
+
                 messages = cur.execute("""
                                        SELECT u.username, m.content,m.sent_at,m.sender_id FROM user as u
                                        JOIN (SELECT * FROM messages WHERE conversations_id = ?) AS m
                                        ON u.id = m.sender_id""",(conv_id,)).fetchall()
+                room_members = cur.execute("SELECT COUNT(username) as members, username FROM conversations_participants WHERE conversations_id = ? AND user_id != ?",(conv_id,user_id)).fetchone()
+                if room_members["members"] > 1:
+                    room_name = db.room_name()
 
+                else:
+                    room_name = room_members["username"]
                 if len(messages) > 0:
                     messages = [dict(m) for m in messages]
-                    messages.insert(0,{"conv_id":conv_id})
+                    messages.insert(0,{"conv_id":conv_id,"myusername":username,'room_name':room_name})
 
-                    for i in range(1,len(messages)):
-
-                        if messages[i]["sender_id"] == user_id:
-                            messages[i]["type"] = "sent"
-                        else:
-                            messages[i]["type"] = "rec"
                     return messages
 
                 return err_db.no_messages_yet
             return err_db.conv_not_exist
+
+
+
+
+    def send_message(self,m_data):
+            with sqlite3.connect(db_path) as db:
+                db.row_factory = sqlite3.Row
+                cur =db.cursor()
+                user_id = cur.execute("Select id from user where username = ?",(m_data["username"],)).fetchone()["id"]
+
+                checking = cur.execute("SELECT * FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,m_data["conv_id"])).fetchone()
+                if checking is not None:
+                    cur.execute("INSERT INTO messages (conversations_id,sender_id,content,sent_at) VALUES(?,?,?,?)",(m_data["conv_id"],user_id,m_data["content"],m_data["sent_at"]))
+                    return {"success":True,"m":"message saved successfully"}
+                return err_db.conv_not_exist
+
+
+    def room_name(self,conv_id):
+            with sqlite3.connect(db_path) as db:
+                db.row_factory = sqlite3.Row
+                cur =db.cursor()
 
