@@ -163,4 +163,14 @@ section p a{
         font-size: 1.5rem;
         margin-top: 10vh;
     }
+    html{
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    section{
+        font-size: 1.5rem;
+        margin-top: 5vh;
+    }
 }

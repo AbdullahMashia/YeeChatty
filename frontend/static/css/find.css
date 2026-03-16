@@ -265,8 +265,11 @@ p:active{
 
 #find_square{
     margin-bottom:2vh;
-     height: clamp(30vh,55vh,80vh);
+     height: clamp(30vh,45vh,80vh);
      margin-top: 11vh;
+}
+#nav{
+    margin-top: -0.2vh;
 }
 }
 

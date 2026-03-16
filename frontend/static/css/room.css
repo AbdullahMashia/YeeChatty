@@ -112,7 +112,7 @@
     width:var(--sender);
 
     position: relative;
-    margin-left: 5vw;
+    margin-left: 10vw;
 
 
 }
@@ -216,7 +216,7 @@
             margin-top:16vh;
         }
         #chat_square{
-            padding-bottom:10vh;
+            padding-bottom:12vh;
         }
 
         #sender img{
@@ -224,13 +224,16 @@
             height:5vh;
 
         }
+
 }
 
 
 
 @media (min-width:800px) and (max-width:1500px)
 {
-
+        #chat_square{
+            padding-bottom:1vh;
+        }
 
 }
 
@@ -260,5 +263,8 @@
         }
         #messages{
             font-size: 1.3rem;
+        }
+                #chat_square{
+            padding-bottom:1vh;
         }
 }

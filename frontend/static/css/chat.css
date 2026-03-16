@@ -127,7 +127,10 @@ form button:hover{
 #chats{
     margin-bottom:2vh;
      height: clamp(30vh,50vh,80vh);
-     margin-top: 5vh;
+     margin-top: -2vh;
+}
+#nav{
+    margin-top: -12vh;
 }
 }
 
