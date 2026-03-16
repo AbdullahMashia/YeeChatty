@@ -220,12 +220,13 @@ class MyDataB:
                                        SELECT u.username, m.content,m.sent_at,m.sender_id FROM user as u
                                        JOIN (SELECT * FROM messages WHERE conversations_id = ?) AS m
                                        ON u.id = m.sender_id""",(conv_id,)).fetchall()
-                room_members = cur.execute("SELECT COUNT(username) as members, username FROM conversations_participants WHERE conversations_id = ? AND user_id != ?",(conv_id,user_id)).fetchone()
+                room_members = cur.execute("SELECT COUNT(user_id) as members,user_id FROM conversations_participants WHERE conversations_id = ? AND user_id != ?",(conv_id,user_id)).fetchone()
                 if room_members["members"] > 1:
                     room_name = db.room_name()
 
                 else:
-                    room_name = room_members["username"]
+                    user_name = cur.execute("SELECT * FROM user WHERE id = ?",(room_members["user_id"],)).fetchone()["username"]
+                    room_name = user_name
                 if len(messages) > 0:
                     messages = [dict(m) for m in messages]
                     messages.insert(0,{"conv_id":conv_id,"myusername":username,'room_name':room_name})

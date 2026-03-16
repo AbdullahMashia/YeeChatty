@@ -11,6 +11,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 }
 *{
     color:white
@@ -33,6 +34,7 @@
     flex-direction: column;
     width:100%;
     overflow-y: scroll;
+
     height: 100%;
     /* background-color: green; */
 }
@@ -40,7 +42,7 @@
 .recv_me{
     background-color: grey;
     max-width:fit-content;
-       padding: 8px 12px;
+       padding: 4px 12px;
     border-radius: 18px;
 
 
@@ -83,15 +85,24 @@
     border-radius: 3vw;
 }
 
-#sender button{
-    width:clamp(5vw, 8vw,10vw);
+#sender img{
+    width:clamp(5vw, 5vw,10vw);
     height:clamp(2vh,5vh,7vh);
-    color:black;
+
+
     font-weight: 900;
-     border:2px solid blue;
+
     margin-left: 2vw;
     font-size: 2rem;
 }
+#sender img:hover{
+   box-shadow: 0px 0px 2vw blue;
+
+}
+#sender img:active{
+  box-shadow: 0px 0px 2vw goldenrod;
+}
+
 #sender{
     display: flex;
     height: clamp(4vh,8vh,20vh);
@@ -101,8 +112,9 @@
     width:var(--sender);
 
     position: relative;
-    top:-10vh;
-    left:calc(50% - calc(var(--sender)/2));
+    margin-left: 5vw;
+
+
 }
 .m_info{
     background-color: lightblue;
@@ -115,35 +127,49 @@
 
 
    background-image: url("/static/media/imgs/chatBack.jpg");
-    width:clamp(30vw,80vw,90vw);
-    margin-top: 20vh;
+    width:100vw;
+    border-radius: 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    height: clamp(30vh,70vh,90vh);
-    margin-bottom: 1vh;
+
+
+    height: 100vh;
+
 
 }
 #nav{
     display: flex;
-    position: relative;
+
 
     flex-direction: row;
     list-style: none;
 }
 
-#nav li button{
 
-    font-size: clamp(1.5rem, 2rem, 3.5rem);
-    border-radius: 2vw;
-   width: clamp(8vw,15vw,30vw);
-    list-style: none;
-    margin-right: 1vh;
-    height:clamp(5vh,8vh,15vh);
+#nav li a{
+    width: fit-content;
+    height: fit-content;
     background-color: rgb(4, 80, 220);
+    border-radius: 2vw;
+    margin-right: 1vw;
+    padding:1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+#nav li img{
+    width: 3vw;
+
 
 }
 #user_info{
     width:20vw;
     position: absolute;
+
     text-align: center;
     border-radius: 1vw;
     color:darkgoldenrod;
@@ -161,19 +187,78 @@
 #chat{
     color:goldenrod;
 }
+
+
+
+
+
+
 @media (min-width:300px) and (max-width:800px)
 {
+        #nav li img{
+            width: 10vw;
 
-    input{
 
-    height:clamp(3vh,5vh,10vh);
-    border-radius: 3vw;
-    width:clamp(30vw,50vw,60vw) ;
-    font-size: clamp(0.5rem,1.2rem, 2rem);
-    text-align: center;
+        }
+
+            input{
+
+            height:clamp(3vh,5vh,10vh);
+            border-radius: 3vw;
+            width:clamp(30vw,50vw,60vw) ;
+            font-size: clamp(0.5rem,1.2rem, 2rem);
+            text-align: center;
+        }
+        #user_info{
+            top:15vh;
+        }
+        #messages{
+            margin-top:16vh;
+        }
+        #chat_square{
+            padding-bottom:10vh;
+        }
+
+        #sender img{
+            width:10vw;
+            height:5vh;
+
+        }
 }
-}
-@media (min-width:800px)
+
+
+
+@media (min-width:800px) and (max-width:1500px)
 {
 
+
+}
+
+@media (min-width:1500px) {
+            #nav li img{
+            width: 2vw;
+
+
+        }
+
+        #user_info{
+            top:18vh;
+            font-size: 1.3rem;
+        }
+        #messages{
+            margin-top:18vh;
+                overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+        }
+
+
+        #sender img{
+            width:5vw;
+            height:5vh;
+
+        }
+        #messages{
+            font-size: 1.3rem;
+        }
 }

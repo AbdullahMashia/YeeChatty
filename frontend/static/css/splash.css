@@ -85,12 +85,14 @@ section{
     top:5vh;
 
     width:80vw;
+    font-size: 0.5rem;
 
 
 }
-*{
-    font-size: 1.5rem;
+#intro p{
+    font-size: 1.3rem;
 }
+
 
 #splash_article{
     justify-content: center;
@@ -105,6 +107,13 @@ section{
 #login_logout{
     height: fit-content;
     padding:1vw;
+}
+section p{
+    font-size: 0.8rem;
+}
+
+section p a{
+    font-size: 1.4rem;
 }
 }
 

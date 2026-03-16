@@ -23,18 +23,19 @@
     </ul>
     <div id="sender">
         <input autofocus  id="sender_text" type="text" placeholder="type">
-        <button autocompelete="false"  id="sender_but"></button>
+        <img id="sender_but" src="/static/media/imgs/send.png">
 
 
     </div>
+    <ul id="nav">
+    <li><a href="/find"><img src="/static/media/imgs/find.png"></a></li>
+    <li><a href="/chats"><img src="/static/media/imgs/chat.png"></a></li>
+    <li><a href="/request"><img src="/static/media/imgs/request.png"></a></li>
+</ul>
 
 </ul>
 
-<ul id="nav">
-    <li><a href="/find"><button id="find" onclick="find_f()">Find</button></a></li>
-    <li><a href="/chats"><button id="chat" onclick="find_f()">Chats</button></a></li>
-    <li><a href="/request"><button id="request" onclick="find_f()">Requests</button></a></li>
-</ul>
+
 </div>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script src="/static/js/room.js"></script>

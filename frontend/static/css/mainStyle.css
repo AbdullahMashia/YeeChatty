@@ -6,7 +6,12 @@
 
 }
 html{
-    overflow: hidden;
+    overflow-x:hidden;
+    overflow-y: hidden;
+}
+body {
+    margin: 0;
+    min-height: 100vh;
 }
 header{
     z-index: 100;
@@ -60,9 +65,11 @@ header{
 
 #login_logout{
 width:fit-content;
+height: fit-content;
 padding:1vw;
 
 }
+
 
 }
 

@@ -4,11 +4,13 @@ let messages = document.getElementById("messages");
 let chat_square = document.getElementById("chat_square");
 let send_but = document.getElementById("sender_but");
 let message_field = document.getElementById("sender_text");
-let message = '';
+let message ;
 let user_info = document.getElementById("user_info");
-let conv_id =0;
-let username = '';
+let conv_id ;
+let username ;
 let sent_at;
+let room_name;
+
 const socket =io({autoConnect:false});
 
     socket.on('connect',()=>console.log('connected successfully'));
@@ -60,13 +62,14 @@ function first_build(messages_load)
     // Sending event listners
     send_but.addEventListener('click',send_message);
     window.addEventListener('keypress',(e)=>{
-    if(e.key =='Enter' && message_field.value !='')
+    if(e.key =='Enter')
     {
         send_message();
     }
     });
 
   messages.scrollTop = messages.scrollHeight;
+
 
 }
 
@@ -81,7 +84,9 @@ async function message_loader(){
     if(Array.isArray(ser_res))
     {
         conv_id = ser_res[0]["conv_id"];
-        username = ser_res[0]["username"]
+        username = ser_res[0]["myusername"]
+        console.log("user_name = >",username);
+        room_name = ser_res[0]["room_name"];
         ser_res.shift();
 
     }
@@ -93,6 +98,8 @@ async function message_loader(){
     joining_room();
 
     console.log("response=>",ser_res);
+
+    user_info.innerText = room_name;
 
 
 }
@@ -176,7 +183,7 @@ function message_builder(element){
             {
 
 
-                         message.classList.add("my_m");
+                message.classList.add("my_m");
                 message_container.classList.add("my_c");
 
 
@@ -217,14 +224,22 @@ function message_builder(element){
 
 function send_message()
 {
-            message = message_field.value;
+
+    if(message_field.value !='')
+    {
+                    message = message_field.value;
             sent_at = time_format();
             message_field.value = '';
             new_message_d  = {'conv_id':conv_id,'username':username,'content':message,'sent_at':sent_at};
             socket.emit('send_message',new_message_d);
+    }
 
 
 }
+
+
+
+
 
 
 
