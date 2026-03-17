@@ -231,9 +231,7 @@
 
 @media (min-width:800px) and (max-width:1500px)
 {
-        #chat_square{
-            padding-bottom:1vh;
-        }
+
 
 }
 
@@ -263,8 +261,5 @@
         }
         #messages{
             font-size: 1.3rem;
-        }
-                #chat_square{
-            padding-bottom:1vh;
         }
 }

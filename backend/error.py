@@ -68,11 +68,16 @@ class Error_yee:
     no_messages_yet = {
         "type":"load messages",
         "success":False,
-        "m":"There is no messages yet"
+        "m":"There is no messages yet",
+        "conv_id":0,
+        "myusername":'',
+        "room_name":'',
+        "status":'empty'
     }
 
     conv_not_exist = {
         "type": "load messages",
         "success":False,
-        "m": "Room Does not exist"
+        "m": "Room Does not exist",
+        "status":'error'
     }

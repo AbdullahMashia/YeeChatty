@@ -2,13 +2,18 @@ import os
 import sqlite3
 from werkzeug.security import generate_password_hash,check_password_hash
 from error import Error_yee
+from encyp import MyEnc
 
+
+en_key = os.environ.get('ENCRYPTION_KEY')
+print("encryptin_key ===========================>",en_key)
 err_db = Error_yee()
 
 base_dir = os.path.dirname(os.path.dirname(__file__))
 db_path = os.path.join(base_dir,"data","yeechatty.db")
 
-encryptino_key = 24234231341451
+
+en_ob = MyEnc()
 
 class MyDataB:
 
@@ -146,11 +151,13 @@ class MyDataB:
             if r_req is not None:
                 if type =="accept":
 
-                        cur.execute("UPDATE  request_messaging SET request_state = 'accepted' WHERE id = ?",(request_id)).fetchone()
+
+                        room_en_key = en_ob.generate_room_key()
+                        cur.execute("UPDATE  request_messaging SET request_state = 'accepted' WHERE id = ?",(request_id,)).fetchone()
 
 
 
-                        cur.execute("INSERT  INTO conversations (encryption_key) VALUES (?)",(encryptino_key,))
+                        cur.execute("INSERT  INTO conversations (encryption_key) VALUES (?)",(room_en_key,))
                         conv_id = cur.lastrowid
                         cur.execute("INSERT  INTO conversations_participants (user_id, conversations_id) VALUES (?,?)", (user_id,conv_id))
                         cur.execute("INSERT  INTO conversations_participants (user_id, conversations_id) VALUES (?,?)",(r_req["sender_id"],conv_id))
@@ -221,19 +228,27 @@ class MyDataB:
                                        JOIN (SELECT * FROM messages WHERE conversations_id = ?) AS m
                                        ON u.id = m.sender_id""",(conv_id,)).fetchall()
                 room_members = cur.execute("SELECT COUNT(user_id) as members,user_id FROM conversations_participants WHERE conversations_id = ? AND user_id != ?",(conv_id,user_id)).fetchone()
+                room_user = cur.execute("SELECT * FROM user WHERE id = ?",(room_members["user_id"],)).fetchone()["username"]
                 if room_members["members"] > 1:
                     room_name = db.room_name()
 
                 else:
-                    user_name = cur.execute("SELECT * FROM user WHERE id = ?",(room_members["user_id"],)).fetchone()["username"]
-                    room_name = user_name
+
+                    room_name = room_user
                 if len(messages) > 0:
                     messages = [dict(m) for m in messages]
-                    messages.insert(0,{"conv_id":conv_id,"myusername":username,'room_name':room_name})
+                    messages.insert(0,{"conv_id":conv_id,"myusername":username,'room_name':room_name,"status":"load"})
+                    key = cur.execute("SELECT encryption_key FROM conversations WHERE id = ?",(conv_id,)).fetchone()
+                    if key is not None:
+                        key = key["encryption_key"]
+                        decrypted_messages = en_ob.decrypt_messages(key,messages)
 
-                    return messages
-
-                return err_db.no_messages_yet
+                    return decrypted_messages
+                res = err_db.no_messages_yet
+                res["conv_id"] = conv_id
+                res["myusername"] = username
+                res["room_name"] = room_name
+                return res
             return err_db.conv_not_exist
 
 
@@ -247,7 +262,12 @@ class MyDataB:
 
                 checking = cur.execute("SELECT * FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,m_data["conv_id"])).fetchone()
                 if checking is not None:
-                    cur.execute("INSERT INTO messages (conversations_id,sender_id,content,sent_at) VALUES(?,?,?,?)",(m_data["conv_id"],user_id,m_data["content"],m_data["sent_at"]))
+
+                    key = cur.execute("SELECT encryption_key FROM conversations WHERE id = ?",(m_data["conv_id"],)).fetchone()
+                    if key is not None:
+                        key = key["encryption_key"]
+                    encrypted_m = en_ob.encrypt_messages(key,m_data["content"])
+                    cur.execute("INSERT INTO messages (conversations_id,sender_id,content,sent_at) VALUES(?,?,?,?)",(m_data["conv_id"],user_id,encrypted_m,m_data["sent_at"]))
                     return {"success":True,"m":"message saved successfully"}
                 return err_db.conv_not_exist
 

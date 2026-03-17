@@ -39,6 +39,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 
 @app.route("/")
 def splash():
+    session.clear()
     return render_template("splash.html")
 
 
@@ -56,7 +57,7 @@ def login():
             return redirect("/chats")
         return jsonify(err_con.wrong_creden)
 
-
+    session.clear()
     return render_template("login.html")
 
 @app.route("/register",methods=["POST","GET"])
@@ -88,7 +89,7 @@ def register():
 
             return redirect("/chats")
 
-
+    session.clear()
     return render_template("register.html")
 
 
@@ -97,11 +98,12 @@ def register():
 @login_required
 def chat():
 
-    return render_template("chats.html")
+    return render_template("chats.html",user_nameT=session["username"])
 
 
-@login_required
+
 @app.route("/room",methods=["POST","GET"])
+@login_required
 def room():
     if request.method =="POST":
         session["conv_id"] = request.get_json(force=True)["conv_id"]

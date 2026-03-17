@@ -3,6 +3,7 @@
 
 let chats = document.getElementById("chats");
 let intro_m = document.createElement("li");
+let user_name = document.getElementById("user_name");
 
 
 window.addEventListener("load", chat_loader);

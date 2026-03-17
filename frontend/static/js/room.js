@@ -10,6 +10,8 @@ let conv_id ;
 let username ;
 let sent_at;
 let room_name;
+let chat_empty = false;
+let messaging_started = false;
 
 const socket =io({autoConnect:false});
 
@@ -31,42 +33,29 @@ let new_message_d;
 
 
 
-function first_build(messages_load)
+function build(messages_load,chat_empty)
 {
     console.log("conver_id:=>",conv_id);
-    if (!Array.isArray(messages_load))
-    {
-        let m = document.createElement("li");
-        m.innerText = messages_load["m"];
-        m.style.padding = "2vw";
-        m.style.backgroundColor = "grey";
-        m.style.fontSize = "2rem";
-        messages.style ="     align-items: center;justify-content: center;";
-        messages.appendChild(m);
-        chat_square.style.background="transparent";
-        return;
+    console.log('chat empty = >',chat_empty);
 
+
+    if(chat_empty)
+    {
+        empty_chat_splash(chat_empty,messaging_started,messages_load["m"]);
 
     }
+    else{
+         messages_load.forEach(element => {
 
-      messages_load.forEach(element => {
-
-        message_builder(element);
-
-
-
+        message_build(element);
 
     });
+    }
+
 
 
     // Sending event listners
-    send_but.addEventListener('click',send_message);
-    window.addEventListener('keypress',(e)=>{
-    if(e.key =='Enter')
-    {
-        send_message();
-    }
-    });
+
 
   messages.scrollTop = messages.scrollHeight;
 
@@ -88,13 +77,44 @@ async function message_loader(){
         console.log("user_name = >",username);
         room_name = ser_res[0]["room_name"];
         ser_res.shift();
+        chat_empty= false;
+
+
+    }
+    else{
+
+        if(ser_res["status"]=="empty")
+        {
+            chat_empty= true;
+            conv_id = ser_res["conv_id"];
+            username = ser_res["myusername"]
+            console.log("user_name = >",username);
+            room_name = ser_res["room_name"];
+            console.log("empty triggered");
+
+        }
+        else{
+            console.log(ser_res['m']);
+            return;
+
+        }
+
 
     }
 
 
+            send_but.addEventListener('click',send_message);
+            window.addEventListener('keypress',(e)=>{
+            if(e.key =='Enter')
+            {
+                send_message();
+            }
+            });
 
-    console.log();
-    first_build(ser_res);
+              build(ser_res,chat_empty);
+
+
+
     joining_room();
 
     console.log("response=>",ser_res);
@@ -153,7 +173,11 @@ function time_format(){
 
 function message_popping(new_message)
 {
-    message_builder(new_message);
+
+         message_build(new_message);
+
+
+
 
 
 }
@@ -165,7 +189,10 @@ function message_popping(new_message)
 
 
 
-function message_builder(element){
+function message_build(element){
+
+
+
 
             let message_container = document.createElement("li");
             let message= document.createElement("p");
@@ -224,14 +251,21 @@ function message_builder(element){
 
 function send_message()
 {
+    messaging_started = true;
+
+    empty_chat_splash(chat_empty,messaging_started);
+
+
 
     if(message_field.value !='')
     {
+
                     message = message_field.value;
             sent_at = time_format();
-            message_field.value = '';
+
             new_message_d  = {'conv_id':conv_id,'username':username,'content':message,'sent_at':sent_at};
             socket.emit('send_message',new_message_d);
+             message_field.value = '';
     }
 
 
@@ -240,6 +274,30 @@ function send_message()
 
 
 
+
+function empty_chat_splash(chat_empty ,messaging_started,no_messages){
+
+
+    if(chat_empty && !messaging_started)
+    {
+        let m = document.createElement("li");
+        m.innerText = no_messages;
+        m.style.padding = "2vw";
+        m.style.backgroundColor = "grey";
+        m.style.fontSize = "2rem";
+        messages.style ="     align-items: center;justify-content: center;";
+        messages.appendChild(m);
+        chat_square.style.background="transparent";
+        return;
+    }
+
+    else if (chat_empty,messaging_started ){
+        messages.remove(messages.lastChild);
+        chat_square.style.backgroundImage = 'url("/static/media/imgs/chatBack.jpg")';
+
+    }
+
+}
 
 
 

@@ -76,7 +76,7 @@
 #requests{
     height:100%;
         overflow-y: scroll;
-
+        scrollbar-width: none;
     -ms-overflow-style: none;
 }
 h3{
@@ -93,9 +93,7 @@ h3{
 
     /* width:clamp(30vw,80vw,90vw); */
     margin-top: 20vh;
-    overflow-y: scroll;
-    scroll-snap-type: proximity;
-    scroll-behavior: initial;
+
 
     height: clamp(30vh,70vh,90vh);
     display: flex;
@@ -115,7 +113,7 @@ h3{
 #nav{
     display: flex;
     position: relative;
-
+        margin-left: 4vw    ;
     flex-direction: row;
     list-style: none;
 }
