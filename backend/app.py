@@ -11,6 +11,10 @@ from config import ini_app
 import my_sock
 
 
+
+
+
+
 app = ini_app()
 
 my_sock_ob.init_app(app, cors_allowed_origins="*")
@@ -53,6 +57,7 @@ def login():
         if user_id:
 
             session["username"] = username
+
             session["user_id"]  = user_id
             return redirect("/chats")
         return jsonify(err_con.wrong_creden)
@@ -87,6 +92,7 @@ def register():
             session["username"] = username
             session["user_id"]  =user_id
 
+
             return redirect("/chats")
 
     session.clear()
@@ -108,7 +114,11 @@ def room():
     if request.method =="POST":
         session["conv_id"] = request.get_json(force=True)["conv_id"]
 
+
         return jsonify({"type":"open_room","m":"opened successfully"})
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fuck you ",db_ob.user_info["last_message"])
+    db_ob.user_info["page_reloaded"] = True
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fuck you ",db_ob.user_info["last_message"])
 
     return render_template("room.html")
 
@@ -219,7 +229,6 @@ def load_chats():
 @app.route("/api/chats/room")
 @login_required
 def load_messages():
-
 
     messages = db_ob.load_messages(session["conv_id"],session["user_id"])
 

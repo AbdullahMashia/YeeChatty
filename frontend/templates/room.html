@@ -3,11 +3,11 @@
 
 {% block title %}
     <link rel="StyleSheet" href="/static/css/room.css">
-    <title>Register</title>
+    <title>chat_room</title>
 {% endblock %}
 
 {%block login_status %}
-    <a style="color:white" href="/logout">logout</a>
+    <a style="color:white" href="/chats">back</a>
 {%endblock%}
 
 {% block body %}
@@ -35,9 +35,10 @@
 
 </ul>
 
-
+<audio src="/static/media/audio/rec.mp3"></audio>
 </div>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script src="/static/js/room.js"></script>
+
 
 {% endblock%}

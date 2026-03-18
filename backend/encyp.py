@@ -3,8 +3,11 @@ from dotenv import load_dotenv
 load_dotenv()
 from cryptography.fernet import Fernet
 
+
+
 key = os.environ.get('ENCRYPTION_KEY')
 
+print("first key ==== > ",key)
 if key is None:
 
     raise RuntimeError("Encryption_key enviroment variable not set")
@@ -14,7 +17,22 @@ cypher = Fernet(key.encode())
 
 
 
+
 class MyEnc:
+
+
+    def __init__(self):
+        self.room_key = None
+        self.room_obj = None
+
+    def key_init(self,en_key):
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>key generated")
+
+        self.room_key =  cypher.decrypt(en_key.encode()).decode()
+
+
+        self.room_obj = Fernet(self.room_key.encode())
+
 
 
     def generate_room_key(self):
@@ -24,14 +42,13 @@ class MyEnc:
         return key
 
 
-    def encrypt_messages(self,key,message):
-        room_key = Fernet(cypher.decrypt(key.encode()))
+    def encrypt_message(self,message):
 
 
 
 
 
-        message["content"]  = room_key.encrypt(message["content"].encode()).decode()
+        message  = self.room_obj.encrypt(message.encode()).decode()
 
 
 
@@ -39,15 +56,28 @@ class MyEnc:
 
 
 
-    def decrypt_messages(self, key,messages):
-        room_key = Fernet(cypher.decrypt(key.encode()))
+    def decrypt_all_messages(self,messages) :
+
+
 
         for m in messages:
-            m["content"] = room_key.decrypt(m["content"].encode()).decode()
+
+            m["content"] = self.decrypt_per_message(m["content"])
 
 
 
         return messages
+
+
+
+
+    def decrypt_per_message(self,message):
+
+        decrypted_message = self.room_obj.decrypt(message.encode()).decode()
+
+
+
+        return decrypted_message
 
 
 

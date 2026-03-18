@@ -45,7 +45,7 @@
        padding: 4px 12px;
     border-radius: 18px;
 
-
+     line-break: anywhere;
     align-self: flex-end;
 
 }
@@ -53,8 +53,11 @@
 .my_m{
     background-color: blue;
     max-width: fit-content;
+    max-height: fit-content;
+     padding: 4px 12px;
 
-    padding: 8px 12px;
+     line-break: anywhere;
+
     border-radius: 18px;
 
 
@@ -65,14 +68,16 @@
     flex-direction: column;
 
      align-self: flex-end;
+     width:clamp(30vw,45vw,60vw);
 
 
 
 }
 /* sent message_field */
 .my_c{
+  width:clamp(30vw,45vw,60vw);
 
-    width:clamp(20vw,30vw,90vw);
+
 
 }
 
@@ -160,6 +165,7 @@
     align-items: center;
     justify-content: center;
 
+
 }
 #nav li img{
     width: 3vw;
@@ -232,7 +238,32 @@
 @media (min-width:800px) and (max-width:1500px)
 {
 
+             #nav li img{
+            width: 2vw;
 
+
+        }
+
+        #user_info{
+            top:18vh;
+            font-size: 1.3rem;
+        }
+        #messages{
+            margin-top:18vh;
+                overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+        }
+
+
+        #sender img{
+            width:5vw;
+            height:5vh;
+
+        }
+        #messages{
+            font-size: 1.3rem;
+        }
 }
 
 @media (min-width:1500px) {

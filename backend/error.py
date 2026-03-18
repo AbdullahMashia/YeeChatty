@@ -81,3 +81,9 @@ class Error_yee:
         "m": "Room Does not exist",
         "status":'error'
     }
+    no_messages_left = {
+        "type":"load messages",
+        "success":False,
+        "m":"No messages Left",
+
+    }

@@ -3,10 +3,16 @@ import sqlite3
 from werkzeug.security import generate_password_hash,check_password_hash
 from error import Error_yee
 from encyp import MyEnc
+from datetime import date, time,datetime
+
+
+
+
+dd = datetime.now()
 
 
 en_key = os.environ.get('ENCRYPTION_KEY')
-print("encryptin_key ===========================>",en_key)
+
 err_db = Error_yee()
 
 base_dir = os.path.dirname(os.path.dirname(__file__))
@@ -17,7 +23,7 @@ en_ob = MyEnc()
 
 class MyDataB:
 
-
+    user_info= dict()
 
 
     def __init__(self):
@@ -27,7 +33,13 @@ class MyDataB:
                 db.executescript(schema.read())
                 db.cursor().execute("INSERT OR IGNORE INTO user (username,full_name,age,country,email,password) VALUES(?,?,?,?,?,?)",("admin","aw",0,"none","admin@yeechatty.com",admin_password))
 
+        self.user_info["username"] = None
+        self.user_info["cur_room"] = None
+        self.user_info["last_message"] = None
+        self.user_info["page_reloaded"] = False
+        self.user_info["reload_old"] = False
 
+        self.user_info["room_key"] = None
 
 # adding new users
     def add_user(self, r_user):
@@ -57,6 +69,7 @@ class MyDataB:
             if valid_user is not None:
 
                 if check_password_hash(valid_user["password"],password):
+                    self.user_info["username"] = username
                     return valid_user["id"]
 
             return False
@@ -66,7 +79,7 @@ class MyDataB:
         with sqlite3.connect(db_path) as db:
             db.row_factory = sqlite3.Row
             cur = db.cursor()
-            user_id= cur.execute("SELECT id FROM user WHERE username = ? AND id != ?",(user_name,owner_id)).fetchone()
+            user_id= cur.execute("SELECT id FROM user WHERE username = ? ",(user_name,)).fetchone()
             if user_id is not None:
 
 
@@ -142,17 +155,18 @@ class MyDataB:
             db.row_factory = sqlite3.Row
             cur =db.cursor()
 
-            print("request_id = ",request_id)
-            print("user_id = >",user_id)
+
             #checking if user is part of the request
             r_req = cur.execute("SELECT *  from request_messaging WHERE id = ? AND receiver_id = ? AND request_state = ?",(request_id,user_id, "pending")).fetchone()
             s_req = cur.execute("SELECT * FROM request_messaging WHERE id = ? AND sender_id = ? AND request_state = ?",(request_id,user_id, "pending")).fetchone()
-            print("request === >>>",s_req)
+
             if r_req is not None:
                 if type =="accept":
 
 
                         room_en_key = en_ob.generate_room_key()
+
+
                         cur.execute("UPDATE  request_messaging SET request_state = 'accepted' WHERE id = ?",(request_id,)).fetchone()
 
 
@@ -202,9 +216,9 @@ class MyDataB:
                                 (SELECT conversations_id FROM conversations_participants WHERE user_id =?) """,(user_id,user_id)).fetchall()
 
             if len(chats)>0:
-                print(chats)
+
                 chats = [dict(r) for r in chats]
-                print(chats)
+
                 return chats
 
             else:
@@ -219,31 +233,76 @@ class MyDataB:
             cur =db.cursor()
 
 
+
             checking = cur.execute("SELECT 1 FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,conv_id)).fetchone()
             if checking is not None:
                 username = cur.execute("select username from user where id = ?",(user_id,)).fetchone()["username"]
+                self.user_info["cur_room"]= conv_id
 
+
+
+                if self.user_info["page_reloaded"]:
+                    self.user_info["last_message"] = cur.execute("Select id from messages Where conversations_id = ? order by id desc limit 1",(conv_id,)).fetchone()["id"]
+                    self.user_info["page_reloaded"] = False
+                    self.user_info['reload_old'] = False
+
+                print("Before ====================>",self.user_info["last_message"])
                 messages = cur.execute("""
-                                       SELECT u.username, m.content,m.sent_at,m.sender_id FROM user as u
-                                       JOIN (SELECT * FROM messages WHERE conversations_id = ?) AS m
-                                       ON u.id = m.sender_id""",(conv_id,)).fetchall()
+                                       SELECT u.username, m.content,m.sent_at,m.sender_id, m.id FROM user as u
+                                       JOIN (SELECT * FROM messages WHERE conversations_id = ?  ) AS m
+                                       ON u.id = m.sender_id WHERE m.id < ? order by sent_at desc limit 20""",(conv_id,self.user_info["last_message"],)).fetchall()
+
+
+
+
+# Initiating the key and encryption object
+                key = cur.execute("SELECT encryption_key FROM conversations WHERE id = ?",(conv_id,)).fetchone()
+                en_ob.key_init(key["encryption_key"])
+
+                if messages is None:
+                    return err_db.no_messages_left
                 room_members = cur.execute("SELECT COUNT(user_id) as members,user_id FROM conversations_participants WHERE conversations_id = ? AND user_id != ?",(conv_id,user_id)).fetchone()
                 room_user = cur.execute("SELECT * FROM user WHERE id = ?",(room_members["user_id"],)).fetchone()["username"]
+
+                # for future room naming
                 if room_members["members"] > 1:
                     room_name = db.room_name()
 
-                else:
 
+                else:
+                    room_user = cur.execute("SELECT * FROM user WHERE id = ?",(room_members["user_id"],)).fetchone()["username"]
                     room_name = room_user
+
                 if len(messages) > 0:
                     messages = [dict(m) for m in messages]
-                    messages.insert(0,{"conv_id":conv_id,"myusername":username,'room_name':room_name,"status":"load"})
-                    key = cur.execute("SELECT encryption_key FROM conversations WHERE id = ?",(conv_id,)).fetchone()
-                    if key is not None:
-                        key = key["encryption_key"]
-                        decrypted_messages = en_ob.decrypt_messages(key,messages)
+                    self.user_info["last_message"]  = messages[-1]["id"]
+
+
+#checking if there is still messages:
+                    m_left = cur.execute("Select 1 FROM messages WHERE conversations_id = ? AND  id <?",(conv_id,self.user_info["last_message"]),).fetchone()
+                    if m_left is not None:
+                        messages_left = True
+                    else:
+                        messages_left = False
+
+
+
+
+                    self.user_info["room_key"] = key
+
+
+                    decrypted_messages = en_ob.decrypt_all_messages(messages)
+
+
+
+                    messages.insert(0,{"conv_id":conv_id,"myusername":username,'room_name':room_name,"status":"load",'still':messages_left,'reload_old':self.user_info["reload_old"]})
+
+                    self.user_info['reload_old'] = True
+
 
                     return decrypted_messages
+
+                # if empty
                 res = err_db.no_messages_yet
                 res["conv_id"] = conv_id
                 res["myusername"] = username
@@ -260,13 +319,13 @@ class MyDataB:
                 cur =db.cursor()
                 user_id = cur.execute("Select id from user where username = ?",(m_data["username"],)).fetchone()["id"]
 
-                checking = cur.execute("SELECT * FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,m_data["conv_id"])).fetchone()
+                checking = cur.execute("SELECT 1 FROM conversations_participants WHERE user_id = ? and conversations_id = ?",(user_id,m_data["conv_id"])).fetchone()
                 if checking is not None:
 
                     key = cur.execute("SELECT encryption_key FROM conversations WHERE id = ?",(m_data["conv_id"],)).fetchone()
                     if key is not None:
                         key = key["encryption_key"]
-                    encrypted_m = en_ob.encrypt_messages(key,m_data["content"])
+                    encrypted_m = en_ob.encrypt_message(m_data["content"])
                     cur.execute("INSERT INTO messages (conversations_id,sender_id,content,sent_at) VALUES(?,?,?,?)",(m_data["conv_id"],user_id,encrypted_m,m_data["sent_at"]))
                     return {"success":True,"m":"message saved successfully"}
                 return err_db.conv_not_exist
