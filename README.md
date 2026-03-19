@@ -13,4 +13,4 @@
    - lksdjfal
 `rgb(23,0,255)`
 
-![my profile]("./frontend/media/imgs/icon.png")
+![my profile](https://github.com/AbdullahMashia/YeeChatty/blob/main/frontend/static/media/imgs/profile.png")
