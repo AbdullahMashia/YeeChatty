@@ -98,15 +98,85 @@
 # FrontEnd
 
 ## templates
- -### layout.html:
+  ### layout.html:
     >Holds the template for the whole project especially the header, logo, and the button
 
-  -###splash.html:
+  ###splash.html:
     >It is where the user redirect first time , it has introduction about Yeechatty and inside it a user can register or login
 
-  -##login.html:
+  ###login.html:
     >through which a user can login into YeeChatty
 
-  -##Register.html:
+  ###Register.html:
+    >Where user can create their account for the first time
+
+  ###find.html:
+    > A user can find all users who are using this app , and if they can use search for finding a specific user
+
+  ###request.html:
+    > all request resides here both incoming and outgoing, here a user can accept or deny a request
+  ### chats.html:
+   > all chat rooms are listed here for users that share a conversation room with the user
+
+  ### room.html:
+   > Here is where the user can send and reseive messages live with a specific user
+
+##Media
+  ##css:
+  > contains the style for all html pages
+
+  ## js:
+  ### chat.js:
+  >  here we have a asynch functions to load all chat rooms as json files and display them in chat.html
+
+  ### find.js:
+  > find.js has two functions for fetching data , the first one is for fetching all users, the second one is for fetching a single user info as json
+
+  ###request.js:
+    > contains asynch functions for fetching request data and sending them when accepting or denying
+  ### room.js:
+  > is the most complex js file here, since it handles the websockets that enables the user to send and receive messages live, and build the ui for the user based on the returned data
+
+
+## Backend
+  ###initiate_app.py
+    > where the app object is created and returned to app.py (to avoid import loop )
+  ### eten.py:
+   > Where socketio object is created before initialized in app.py
+ ### error.py:
+   > prepeared error respones resides here
+ ### encyp.py:
+   > Here key generation for each room, encrypting, decrypting keys, and messages are done here
+ ###auth.py:
+ > Here the app makes sure only authorized people can access the resouces (@login_required)
+
+### db.py:
+> db.py is the brain of Yeechatty, it has all the logic for yeechatty database interactions such as :
+> - creating new accounts
+> - login
+> - send requests
+> - accepted or deny requests
+> - search for user
+> - create the default admin user
+> - create the perwritten tables and indexes from file schema.sql
+
+ ### my_sock.py:
+   > holds the logic for webSockets from flask_socketio library in flask:
+> - holds the events for:
+>    - connection
+>    - disconnect
+>    - join_room
+>    - send_message
+ ### app.py:
+   > here all the mechanical parts are joined to build a functioning web App:
+> All routes are done here
+> All api/ endpoints are here
+> user experience sequance is built here
+> 
+
+## requirements.txt:
+> where all dependencies are listed
+
+  
 
 
