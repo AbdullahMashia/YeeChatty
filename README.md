@@ -10,7 +10,7 @@
 
 #### Description:
 
-[!note] What is Yeechatty?
+>[!note] What is Yeechatty?
 #### Yeechatty is a web based chat application, that enables users to create accounts login with their credeintials, `<br>`find new users, send them message_request, accept request messaging , and exchange messages with those people
 
 ## YeeChatty Project has the following structure:
