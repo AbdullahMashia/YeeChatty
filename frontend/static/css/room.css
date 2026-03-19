@@ -294,3 +294,60 @@
             font-size: 1.3rem;
         }
 }
+
+
+
+
+
+#load_a{
+    content: '';
+    width:10vw;
+    height: 10vw;
+    border-radius: 50%;
+    position: absolute;
+    left:45vw;
+    top:22vh;
+
+    background:conic-gradient(from var(--rotate),blue var(--fill),grey 30%);
+    z-index: 10;
+    animation:loader 3s ease-in-out infinite alternate;
+}
+
+#load_a::after{
+    content: '';
+    width:8vw;
+    height: 8vw;
+    position: absolute;
+    border-radius: 50%;
+    background-color: grey;
+    left:1vw;
+    top:1vw;
+    z-index:-1;
+}
+
+@keyframes loader {
+    from{
+        --rotate:0deg;
+        --fill:0deg;
+
+    }
+
+    to{
+        --rotate:620deg;
+        --fill:270deg;
+
+    }
+
+}
+@property --rotate{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --fill{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits:false
+}
+

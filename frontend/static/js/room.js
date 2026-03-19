@@ -15,35 +15,48 @@ let messaging_started = false;
 let last_message_loaded ;
 let messages_left;
 let old_messages;
-let rec_effect = document.querySelector('audio')
+let rec_effect = document.querySelector('audio');
+let blocker = document.querySelector('#blocker');
+let rotateer = document.createElement("div");
+let new_m = false;
+
+
+  rotateer.id = "load_a";
+
 
 messages.addEventListener('scrollend',()=>{
 
+
+
+
        if(messages.scrollTop == 0 && messages_left == true)
     {
-                            let loader = document.createElement('div');
-        loader.style.width = "100vw";
-        loader.style.minHeight = "20vh";
-        loader.style.background="rgba(0,0,255,100%)";
+
+
+        blocker.classList.add('active');
+
+
+            messages.prepend(rotateer);
 
 
 
 
-
-
-
-
-
-        messages.prepend(loader);
 
         setTimeout(() => {
+            console.log("current total_hight",messages.scrollHeight)
 
-            messages.removeChild(loader);
+
+            messages.removeChild(rotateer);
+            blocker.classList.remove('active');
 
         message_loader();
-        console.log("reaches the last point");
+
 
         }, 1000);
+
+        messages.scrollTop = 250;
+
+
 
 
 
@@ -63,7 +76,8 @@ const socket =io({autoConnect:false});
 
     socket.on('connect',()=>console.log('connected successfully'));
     socket.on('error',()=>console.log("connection failed"));
-    socket.on('join_room',(data)=>console.log(`joined room ${data["room"]}`))
+    socket.on('join_room',(data)=>console.log(`joined room ${data["room"]}`));
+    socket.on('leave_room',()=>console.log("left room_successfully"));
     socket.on('new_message',(data)=>message_popping(data));
 
 window.addEventListener("load",message_loader);
@@ -81,36 +95,32 @@ let new_message_d;
 
 function build(messages_load,chat_empty)
 {
-    console.log("messages reload = >>>",old_messages);
-    console.log("conver_id:=>",conv_id);
-    console.log('chat empty = >',chat_empty);
 
 
-    if(chat_empty)
+
+    if(!chat_empty)
     {
-    //     empty_chat_splash(chat_empty,messaging_started,messages_load["m"]);
-    console.log("chat is empty");
+    //
+        new_m = false;
 
-    }
-    else{
-         messages_load.forEach(element => {
+             messages_load.forEach(element => {
 
-        message_build(element);
+        message_build(element,new_m);
 
     });
-    }
 
+    }
 
 
     // Sending event listners
 
     if (!old_messages )
-          messages.scrollTop = messages.scrollHeight;
+    {
 
-    else{
-        messages.scrollTop = 10;
+        messages.scrollTop = messages.scrollHeight;
 
     }
+
 
 
 
@@ -129,7 +139,7 @@ async function message_loader(){
     {
         conv_id = ser_res[0]["conv_id"];
         username = ser_res[0]["myusername"]
-        console.log("user_name = >",username);
+
         room_name = ser_res[0]["room_name"];
         messages_left = ser_res[0]["still"]
 
@@ -150,13 +160,13 @@ async function message_loader(){
             chat_empty= true;
             conv_id = ser_res["conv_id"];
             username = ser_res["myusername"]
-            console.log("user_name = >",username);
+
             room_name = ser_res["room_name"];
-            console.log("empty triggered");
+
 
         }
         else{
-            console.log(ser_res['m']);
+
             return;
 
         }
@@ -178,8 +188,6 @@ async function message_loader(){
 
 
     joining_room();
-
-    console.log("response=>",ser_res);
 
     user_info.innerText = room_name;
 
@@ -237,8 +245,11 @@ function message_popping(new_message)
 {
 
         rec_effect.play();
-         message_build(new_message);
+        new_m = true;
 
+         message_build(new_message,new_m);
+
+         messages.scrollTop  = messages.scrollHeight;
 
 
 
@@ -252,7 +263,7 @@ function message_popping(new_message)
 
 
 
-function message_build(element){
+function message_build(element, new_m){
 
 
 
@@ -296,12 +307,22 @@ function message_build(element){
 
 
             }
-                     m_info.innerText=element["sent_at"];
 
+            m_info.innerText=element["sent_at"];
             message_container.appendChild(m_info);
 
+            if(new_m)
+            {
+
+
+            messages.appendChild(message_container);
+            return;
+
+            }
+
+
             messages.prepend(message_container);
-             messages.scrollTop = messages.scrollHeight;
+
 
 }
 
@@ -363,10 +384,11 @@ function send_message()
 // }
 
 
-function partialy_loading(){
 
+
+function close_room(){
+    socket.emit('leave_room',{'type':'leave_room',"m":"leave room"});
+
+    location.replace('/chats');
 }
-
-
-
 

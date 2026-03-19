@@ -242,15 +242,18 @@ class MyDataB:
 
 
                 if self.user_info["page_reloaded"]:
-                    self.user_info["last_message"] = cur.execute("Select id from messages Where conversations_id = ? order by id desc limit 1",(conv_id,)).fetchone()["id"]
+                    last_m = cur.execute("Select id from messages Where conversations_id = ? order by id desc limit 1",(conv_id,)).fetchone()
+                    if last_m is not None:
+                        self.user_info["last_message"] = last_m["id"]
+
                     self.user_info["page_reloaded"] = False
                     self.user_info['reload_old'] = False
 
-                print("Before ====================>",self.user_info["last_message"])
+
                 messages = cur.execute("""
                                        SELECT u.username, m.content,m.sent_at,m.sender_id, m.id FROM user as u
                                        JOIN (SELECT * FROM messages WHERE conversations_id = ?  ) AS m
-                                       ON u.id = m.sender_id WHERE m.id < ? order by sent_at desc limit 20""",(conv_id,self.user_info["last_message"],)).fetchall()
+                                       ON u.id = m.sender_id WHERE m.id < ? order by sent_at desc limit 30""",(conv_id,self.user_info["last_message"],)).fetchall()
 
 
 

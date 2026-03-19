@@ -116,9 +116,9 @@ def room():
 
 
         return jsonify({"type":"open_room","m":"opened successfully"})
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fuck you ",db_ob.user_info["last_message"])
+
     db_ob.user_info["page_reloaded"] = True
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fuck you ",db_ob.user_info["last_message"])
+
 
     return render_template("room.html")
 

@@ -1,5 +1,5 @@
 
-
+#used Deep seek here to explain the library and how it's used
 from exten import my_sock_ob
 from flask_socketio import emit,join_room,leave_room,rooms
 from flask import session,request,jsonify
@@ -51,6 +51,10 @@ def handle_connect():
 
 
 
+
 @my_sock_ob.on('disconnect')
 def disc(d):
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>disconnected")
+
+
+

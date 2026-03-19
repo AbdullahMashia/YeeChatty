@@ -26,7 +26,7 @@ class MyEnc:
         self.room_obj = None
 
     def key_init(self,en_key):
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>key generated")
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>key initiaed")
 
         self.room_key =  cypher.decrypt(en_key.encode()).decode()
 
