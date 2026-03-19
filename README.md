@@ -1,16 +1,76 @@
+# YOUR PROJECT TITLE
+
+#### Video Demo:  `<URL HERE>`
+
+#### Description:
+
 # YeeChatty
->My name is Abdullah
 
-- dsaljfasdlfj
-- sdlkjf
-- sdflkjsdf
-- sdfkljsdf
--   lsdkjf
-   - asljflksdaj
-   - slkfja
-   - jflksdajf
-   - skldfjsd
-   - lksdjfal
-`rgb(23,0,255)`
+#### Video Demo: `<url here>`
 
-![my profile](https://github.com/AbdullahMashia/YeeChatty/blob/main/frontend/static/media/imgs/profile.png)
+#### Description:
+
+#### Yeechatty is a web based chat application, that enables users to create accounts login with their credeintials, `<br>`find new users, send them message_request, accept request messaging , and exchange messages with those people
+
+## YeeChatty Project has the following structure:
+
+## - /
+
+- README.md
+- requirements.txt
+- schema.sql
+- /backend/
+  - app.py
+  - auth.py
+  - initiate_app.py
+  - db.py
+  - encyp.py
+  - error.py
+  - exten.py
+  - my_sock.py
+- /frontend/
+  - static/
+    - CSS/
+      - chat.css
+      - conv.css
+      - find.css
+      - login.css
+      - mainStyle.css
+      - profile.css
+      - register.css
+      - request.css
+      - room.css
+      - splash.css
+    - js/
+      - chat.js
+      - find.js
+      - profile.js
+      - request.js
+      - room.js
+    - media/
+      - audio/
+        - rec.mp3
+      - imgs/
+        - chat.png
+        - chatBack.jpg
+        - find.png
+        - myIntro.gif
+        - myicon.png
+        - mylogo.png
+        - profile.png
+        - request.png
+        - s.jpg
+        - send.png
+  - templates/
+    - layout.html
+    - splash.html
+    - register.html
+    - login.html
+    - find.html
+    - request.html
+    - chats.html
+    - room.html
+
+# FrontEnd
+
+# layout.html:
