@@ -3,11 +3,11 @@ from db import MyDataB
 from error import Error_yee
 from flask_session import Session
 from auth import login_required
-from response import Response
+
 import os
 from exten import my_sock_ob
 from flask_socketio import SocketIO
-from config import ini_app
+from initiate_app import ini_app
 import my_sock
 
 
@@ -25,8 +25,6 @@ my_sock_ob.init_app(app, cors_allowed_origins="*")
 db_ob = MyDataB()
 
 err_con = Error_yee()
-res_ob = Response()
-
 
 
 
@@ -184,7 +182,7 @@ def requests_sender():
 
     if not db_ob.request_exist(session["user_id"], data_s["rec_id"]):
         db_ob.send_request(session["user_id"],data_s["rec_id"])
-        return jsonify(res_ob.request_sent)
+        return jsonify( {'success': True,'message': 'Chat request sent','data': { 'id': 19, 'sender_id': 1, 'receiver_id':5, 'status': 'pending',}})
 
     return err_con.request_sent
 

@@ -1,3 +1,4 @@
+#used gemeni for explaining how wrapper works and the decor function
 from functools import wraps
 from flask import Flask, redirect,session
 
