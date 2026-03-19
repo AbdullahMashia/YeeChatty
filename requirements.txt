@@ -1,0 +1,5 @@
+Flask
+Flask-SocketIO
+cryptography
+Flask-Session
+python-dotenv
