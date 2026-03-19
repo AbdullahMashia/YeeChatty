@@ -122,13 +122,24 @@ li div{
 {
     div ul li{
 
-        height:clamp(5vh,12vh,15vh);
+        height:clamp(5vh,8vh,15vh);
+        display: flex;
+        align-items: center;
+        font-weight: bold;
         padding:0.2vw;
     }
     ul li label{
-        height:clamp(5vh,10vh,15vh);
+        height:clamp(5vh,8vh,15vh);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
     ul li div{
-        height:clamp(5vh,10vh,15vh);
+        height:clamp(5vh,8vh,15vh);
+           display: flex;
+    align-items: center;
+    justify-content: center;
     }
+
 }

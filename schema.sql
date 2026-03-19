@@ -52,8 +52,8 @@ CREATE TABLE IF NOT EXISTS messages(
   id INTEGER PRIMARY KEY,
   conversations_id int not null,
   sender_id int not null,
-  content varchar(1024) not null default ' ',
-  sent_at timestamp default CURRENT_TIMESTAMP,
+  content varchar(2048) not null default ' ',
+  sent_at TIMESTAMP,
   r_type varchar(10) default 'text',
   FOREIGN KEY(conversations_id) references conversations(id),
   FOREIGN KEY (sender_id) references user(id)

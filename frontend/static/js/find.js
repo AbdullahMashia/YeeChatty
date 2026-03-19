@@ -3,13 +3,20 @@
 
 let users = document.getElementById("users");
 let p_mate = document.getElementById("online");
+  let search_box = document.getElementById("username");
 
 
-window.onload =  find_users();
 
 
 let single_request_sent_id = 0;
 
+window.onload =  find_users();
+
+window.addEventListener('keypress',(e)=>{
+    if(e.key == 'Enter' && search_box.value !='')
+        find_user();
+
+});
 
 let aaa = [2,4,1,5];
 
@@ -18,6 +25,9 @@ async function find_users()
     let response = await fetch("/api/users/find");
     let users_r = await response.json();
      p_mate.addEventListener("click",()=>{
+
+
+
         console.log("clicked");
         find_users() ;
  } );
@@ -117,7 +127,7 @@ async function requset_sender(users_arr,e){
 
             };
 
-            let response = await fetch("/api/requests", {
+            let response = await fetch("/api/requests/send", {
                 method: "POST",
                 heaers:{
                    "Content-Type": "application/json",
@@ -150,10 +160,10 @@ async function requset_sender(users_arr,e){
 
 async function find_user()
 {
+  username = search_box.value;
 
-    let username = document.getElementById("username").value;
 
-    console.log(username);
+
 
 
     let res = await fetch("/api/users/find",{

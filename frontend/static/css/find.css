@@ -28,7 +28,7 @@
     font-size: clamp(0.5rem, 1.5rem,2rem);
     display: flex;
     flex-direction: row;
-    width:clamp(30vw,40vw,60vw);
+    width:clamp(30vw,50vw,60vw);
     text-align: center;
     padding:0.5vw;
     border-radius: 1vw;
@@ -66,17 +66,17 @@
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    width:clamp(50vw,70vw,80vw);
+    width:clamp(50vw,80vw,80vw);
 
     /* width:clamp(30vw,80vw,90vw); */
-    margin-top: 15vh;
+    margin-top: 8vh;
 
 
-    height: clamp(30vh,60vh,90vh);
+    height: clamp(30vh,50vh,90vh);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content:space-around;
     margin-bottom: 1vh;
 
 }
@@ -84,8 +84,8 @@
 
 #online{
     background-color: rgb(20, 53, 145);
-
-
+    margin-bottom: 3vh;
+    cursor: pointer;
     max-height: fit-content;
     padding:1vw;
     border-radius: 1vw;
@@ -131,23 +131,29 @@
 #nav{
     display: flex;
     position: relative;
-    top:3vh;
+    margin-top: 3vh;
     flex-direction: row;
     list-style: none;
+        margin-left: 4vw    ;
 }
 
-#nav li button{
-
-    font-size: clamp(1.5rem, 2rem, 3.5rem);
+#nav li a{
+    width: fit-content;
+    height: fit-content;
+   background-color: rgb(20, 53, 145);
     border-radius: 2vw;
-   width: clamp(8vw,15vw,30vw);
-    list-style: none;
-    margin-right: 1vh;
-    height:clamp(5vh,8vh,15vh);
-    background-color: rgb(20, 53, 145);
+    margin-right: 1vw;
+    padding:3vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
+#nav li img{
+    width: 5vw;
 
+
+}
 #nav li button:hover{
 
     color:goldenrod;
@@ -189,7 +195,7 @@ p:active{
 
 
 /* responsive design condition*/
-@media (min-width:300px) and (max-width:800px)
+/* @media (min-width:300px) and (max-width:800px)
 {
     #nav li button{
         font-size: clamp(0.4rem,1.2rem,2rem);
@@ -215,7 +221,7 @@ p:active{
 
 }
 
-/*laptops */
+/*laptops
 @media (min-width:800px)
 {
 
@@ -224,4 +230,93 @@ p:active{
     }
 
 
+} */
+
+
+@media (min-width:300px) and (max-width:800px)
+{
+    #nav li a{
+        padding:3vw 5vw;
+        margin-right: 3vw;
+    }
+
+    input{
+
+    height:clamp(3vh,5vh,10vh);
+    border-radius: 3vw;
+    width:clamp(30vw,50vw,60vw) ;
+    font-size: clamp(0.5rem,1.2rem, 2rem);
+    text-align: center;
+    }
+    #profile{
+        width:clamp(4vw,10vw,30vw);
+        height:clamp(4vw,10vw,30vw);
+        position: absolute;
+        left:85%;
+        top:15%;
+
+
+    }
+
+    #nav li img{
+    width: 10vw;
+
+
 }
+
+#find_square{
+    margin-bottom:2vh;
+     height: clamp(30vh,45vh,80vh);
+     margin-top: 11vh;
+}
+#nav{
+    margin-top: -0.2vh;
+}
+}
+
+
+
+
+
+@media (min-width:800px) and (max-width:1500px)
+{
+        #nav li img{
+    width: 2.5vw;
+
+
+}
+
+#find_square{
+    margin-bottom:2vh;
+     height: clamp(30vh,53vh,80vh);
+     margin-top: 14vh;
+}
+
+    #nav li a{
+        padding:2vw;
+        margin-right: 3vw;
+    }
+
+}
+
+@media (min-width:1500px) {
+
+      #nav li img{
+    width: 2.5vw;
+
+
+}
+
+#find_square{
+    margin-bottom:2vh;
+     height: clamp(30vh,60vh,80vh);
+     margin-top: 17vh;
+}
+
+    #nav li a{
+        padding:1vw;
+        margin-right: 3vw;
+    }
+}
+
+

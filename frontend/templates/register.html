@@ -7,7 +7,7 @@
 {% endblock %}
 
 {%block login_status %}
-    <a style="color:white" href="/">back</a>
+    <a id="back_but" style="color:white;" href="/">back</a>
 {%endblock%}
 
 {% block body %}
@@ -15,14 +15,14 @@
 
 <h1> Register</h1>
 
-<form method="POST" action="/register">
-    <input autofocus name="username" type="text" required placeholder="username">
-    <input name="fullname" type="text" required placeholder="full name">
-    <input name="email" type="email" required placeholder="email">
-    <input name="age"  type="number" min="10" max="100" step="1" value="18" placeholder="age">
-    <input name="country" type="text" placeholder="countery">
-    <input name="password" type="password" required placeholder="password" >
-    <input name="cpassword" type="password" required placeholder="Confirm password">
+<form  method="POST" action="/register">
+    <input class="f" autofocus name="username" type="text" required placeholder="username">
+    <input class ="f" name="fullname" type="text" required placeholder="full name">
+    <input class="f" name="email" type="email" required placeholder="email">
+    <input class ="f" name="age"  type="number" min="10" max="100" step="1" value="18" placeholder="age">
+    <input class="f" name="country" type="text" placeholder="countery">
+    <input class="f" name="password" type="password" required placeholder="password" >
+    <input class="f" name="cpassword" type="password" required placeholder="Confirm password">
     <button type="submit">Register</button>
 
 </form>

@@ -48,4 +48,42 @@ class Error_yee:
 
     }
 
+    not_request_yet = {
+        "type":"load requests",
+        "success": False,
+        "m":"No requests Yet, Find users and Send them request"
+    }
 
+    request_not_found = {
+        "type":"accept request",
+        "success":False,
+        "m": "Request not found or you are not part of the request"
+    }
+
+    no_chatsFound = {
+        "type":"load chats",
+        "success":False,
+        "m": "There is no chats YET"
+    }
+    no_messages_yet = {
+        "type":"load messages",
+        "success":False,
+        "m":"There is no messages yet",
+        "conv_id":0,
+        "myusername":'',
+        "room_name":'',
+        "status":'empty'
+    }
+
+    conv_not_exist = {
+        "type": "load messages",
+        "success":False,
+        "m": "Room Does not exist",
+        "status":'error'
+    }
+    no_messages_left = {
+        "type":"load messages",
+        "success":False,
+        "m":"No messages Left",
+
+    }

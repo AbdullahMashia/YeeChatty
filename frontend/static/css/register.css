@@ -1,11 +1,15 @@
 #reg_screen{
+
+
     width:100vw;
     height: 100vh;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    position: relative;
+    top:10vh;
 }
 form{
     display: flex;
@@ -31,7 +35,7 @@ input{
     text-align: center;
 }
 form button{
-    width:  clamp(10vw,20vw,80vw);
+    width:  fit-content;
     height:clamp(3vh,5vh,10vh) ;
     color:white;
     font-size: clamp(1rem,1.5rem,2rem);
@@ -41,12 +45,20 @@ form button{
 }
 p a{
     font-size: clamp(1rem, 1.5rem, 2rem);
+
 }
 p{
     font-size: clamp(0.5rem, 1.2rem, 2rem);
+       width:fit-content;
 }
 #go_to_login{
     font-size: clamp(1.5rem,2rem, 3rem);
+
+}
+
+#back_but{
+    width:100%;
+    height: 100%;
 
 }
 

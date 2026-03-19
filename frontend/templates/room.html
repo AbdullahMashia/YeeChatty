@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <link rel="StyleSheet" href="/static/css/room.css">
+    <title>chat_room</title>
+{% endblock %}
+
+{%block login_status %}
+    <a style="color:white" onclick="close_room()">back</a>
+{%endblock%}
+
+{% block body %}
+<div id="chat_screen">
+
+
+
+<ul id="chat_square" >
+    <div id="user_info"></div>
+    <ul id="messages">
+
+
+    </ul>
+    <div id="sender">
+        <input autofocus  id="sender_text" type="text" placeholder="type">
+        <img id="sender_but" src="/static/media/imgs/send.png">
+
+
+    </div>
+    <ul id="nav">
+    <li><a href="/find"><img src="/static/media/imgs/find.png"></a></li>
+    <li><a href="/chats"><img src="/static/media/imgs/chat.png"></a></li>
+    <li><a href="/request"><img src="/static/media/imgs/request.png"></a></li>
+</ul>
+
+</ul>
+
+<audio src="/static/media/audio/rec.mp3"></audio>
+</div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="/static/js/room.js"></script>
+
+
+{% endblock%}

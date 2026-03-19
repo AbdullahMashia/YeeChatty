@@ -49,7 +49,7 @@
 }
 /* sent messages */
 .my_m{
-    background-color: blue;
+     background-color: rgb(4, 55, 196);
     max-width: fit-content;
 
     padding: 8px 12px;
@@ -147,7 +147,7 @@
     color:darkgoldenrod;
     left: calc(50% - 10vw);
     padding:5px;
-    background-color:darkblue;
+    background-color: rgb(4, 55, 196);
 }
 #nav li button:hover{
 

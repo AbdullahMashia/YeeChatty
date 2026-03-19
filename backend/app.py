@@ -5,20 +5,45 @@ from flask_session import Session
 from auth import login_required
 from response import Response
 import os
-project_root = os.path.dirname(os.path.dirname(__file__))
-app = Flask(__name__, template_folder=os.path.join(project_root , "frontend/templates") ,   static_folder= os.path.join(project_root, "frontend/static"))
+from exten import my_sock_ob
+from flask_socketio import SocketIO
+from config import ini_app
+import my_sock
 
+
+
+
+
+
+app = ini_app()
+
+my_sock_ob.init_app(app, cors_allowed_origins="*")
+#initializing socket ob
+
+
+#objects:
 db_ob = MyDataB()
 
 err_con = Error_yee()
 res_ob = Response()
 
 
+
+
+
 app.config["SESSION_TYPE"] = "filesystem"
 
-Session(app)
+
+
+
+
+
+
+
+
 @app.route("/")
 def splash():
+    session.clear()
     return render_template("splash.html")
 
 
@@ -32,11 +57,12 @@ def login():
         if user_id:
 
             session["username"] = username
+
             session["user_id"]  = user_id
-            return redirect("/chat")
+            return redirect("/chats")
         return jsonify(err_con.wrong_creden)
 
-
+    session.clear()
     return render_template("login.html")
 
 @app.route("/register",methods=["POST","GET"])
@@ -66,23 +92,35 @@ def register():
             session["username"] = username
             session["user_id"]  =user_id
 
-            return redirect("/chat")
 
+            return redirect("/chats")
 
+    session.clear()
     return render_template("register.html")
 
 
-@app.route("/chat")
+#chat page
+@app.route("/chats")
 @login_required
 def chat():
-    print(session)
-    return render_template("chats.html")
+
+    return render_template("chats.html",user_nameT=session["username"])
 
 
+
+@app.route("/room",methods=["POST","GET"])
 @login_required
-@app.route("/chat/1")
-def conv():
-    return render_template("conversation.html")
+def room():
+    if request.method =="POST":
+        session["conv_id"] = request.get_json(force=True)["conv_id"]
+
+
+        return jsonify({"type":"open_room","m":"opened successfully"})
+
+    db_ob.user_info["page_reloaded"] = True
+
+
+    return render_template("room.html")
 
 
 @app.route("/request")
@@ -125,7 +163,6 @@ def find_users():
 
     else:
         data_f = request.get_json(force=True)
-
         user_f = db_ob.user_data(data_f["username"], session["user_id"])
 
 
@@ -138,10 +175,10 @@ def find_users():
 
 
 
-
-@app.route("/api/requests",methods=["POST","GET"])
+#sending requests in find page
+@app.route("/api/requests/send",methods=["POST","GET"])
 @login_required
-def requests_handler():
+def requests_sender():
     data_s = request.get_json(force=True)
 
 
@@ -151,11 +188,60 @@ def requests_handler():
 
     return err_con.request_sent
 
+# returns all requests
+
+@app.route("/api/requests",)
+@login_required
+def load_requests():
+    all_request = db_ob.all_user_req(session["user_id"])
+    print("reqqqqq === >>", all_request)
+    return jsonify(all_request)
+
+
+
+
+# handles the actions of requests
+@app.route("/api/request/handler", methods=["POST","GET"])
+@login_required
+def request_hanlder():
+    req = request.get_json()
+    type = req["type"]
+
+
+    res = db_ob.accept_request(req["request_id"],session["user_id"],type)
+
+    return jsonify(res)
+
+
+
+#chats content
+#returns all rooms
+@app.route("/api/chats")
+@login_required
+def load_chats():
+    chats = db_ob.user_chats(session["user_id"])
+
+    return jsonify(chats)
+
+
+
+
+@app.route("/api/chats/room")
+@login_required
+def load_messages():
+
+    messages = db_ob.load_messages(session["conv_id"],session["user_id"])
+
+
+
+
+    return jsonify(messages)
 
 
 
 
 
 
-
-
+if __name__ == "__main__":
+    print('strarted debugging')
+    my_sock_ob.run(app,debug=True)

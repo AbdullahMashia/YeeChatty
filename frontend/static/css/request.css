@@ -5,12 +5,13 @@
 #request_screen{
     width:100vw;
     height: 100vh;
-    top:-15vh;
+
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+
 }
 *{
     color:white
@@ -73,7 +74,10 @@
 
 
 #requests{
-    height:clamp(30vh,70vh,90vh) ;
+    height:100%;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 h3{
     background-color: rgb(7, 7, 92);
@@ -89,19 +93,16 @@ h3{
 
     /* width:clamp(30vw,80vw,90vw); */
     margin-top: 20vh;
-    overflow-y: scroll;
-    scroll-snap-type: proximity;
-    scroll-behavior: initial;
-    scrollbar-width: 0;
+
+
     height: clamp(30vh,70vh,90vh);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1vh;
 
+
 }
-
-
 
 
 
@@ -111,21 +112,28 @@ h3{
 #nav{
     display: flex;
     position: relative;
-    top:-0.5vh;
+        margin-left: 4vw    ;
     flex-direction: row;
     list-style: none;
 }
 
-#nav li button{
+#nav li a{
 
     font-size: clamp(1.5rem, 2rem, 3.5rem);
     border-radius: 2vw;
-   width: clamp(8vw,15vw,30vw);
+   width: fit-content;
     list-style: none;
     margin-right: 1vh;
-    height:clamp(5vh,8vh,15vh);
+    height:fit-content;
     background-color: rgb(20, 53, 145);
+    display: flex;
+    align-items: center;
+    justify-content: ce;
 
+
+}
+#nav li  img{
+    width:10vw;
 }
 #user_info{
     width:20vw;
@@ -178,7 +186,7 @@ h3:active{
 
 
 /* responsive design condition*/
-@media (min-width:300px) and (max-width:800px)
+/* @media (min-width:300px) and (max-width:800px)
 {
     #nav li button{
         font-size: clamp(0.4rem,1.2rem,2rem);
@@ -220,4 +228,90 @@ h3:active{
 
     }
 
+} */
+
+@media (min-width:300px) and (max-width:800px)
+{
+    #nav li a{
+        padding:3vw 5vw;
+        margin-right: 3vw;
+    }
+
+    input{
+
+    height:clamp(3vh,5vh,10vh);
+    border-radius: 3vw;
+    width:clamp(30vw,50vw,60vw) ;
+    font-size: clamp(0.5rem,1.2rem, 2rem);
+    text-align: center;
+    }
+    #profile{
+        width:clamp(4vw,10vw,30vw);
+        height:clamp(4vw,10vw,30vw);
+        position: absolute;
+        left:85%;
+        top:15%;
+
+
+    }
+
+    #nav li img{
+    width: 10vw;
+
+
+}
+
+#request_square{
+    margin-bottom:2vh;
+     height: clamp(30vh,43vh,80vh);
+     margin-top: 0vh;
+}
+#nav{
+    top:-12.4vh;
+}
+}
+
+
+
+
+
+@media (min-width:800px) and (max-width:1500px)
+{
+        #nav li img{
+    width: 2.5vw;
+
+
+}
+
+#request_square{
+    margin-bottom:2vh;
+     height: clamp(30vh,53vh,80vh);
+     margin-top: -12vh;
+}
+
+    #nav li a{
+        padding:2vw;
+        margin-right: 3vw;
+    }
+
+}
+
+@media (min-width:1500px) {
+
+      #nav li img{
+    width: 2.5vw;
+
+
+}
+
+#request_square{
+    margin-bottom:2vh;
+     height: clamp(30vh,55vh,80vh);
+     margin-top:-12vh;
+}
+
+    #nav li a{
+        padding:1vw;
+        margin-right: 3vw;
+    }
 }
