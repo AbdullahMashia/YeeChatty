@@ -1,6 +1,6 @@
 # YeeChatty
 
-#### Video Demo: `<https://youtu.be/Bt9hI401JRw>`
+#### Video Demo: <https://youtu.be/Bt9hI401JRw>
 
 #### Description:
 
