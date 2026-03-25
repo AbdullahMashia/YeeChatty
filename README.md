@@ -1,6 +1,6 @@
 # YeeChatty
 
-#### Video Demo: `<url here>`
+#### Video Demo: [https://youtu.be/Bt9hI401JRw](https://youtu.be/Bt9hI401JRw)
 
 #### Description:
 
@@ -12,7 +12,7 @@
 
 - HTML 5
 - CSS
-- JS ES2025 / ES2026
+- JS
 - Flask
 - eventlet
 - python
@@ -154,7 +154,7 @@
 
 > is the most complex js file here, since it handles the websockets that enables the user to send and receive messages live, and build the ui for the user based on the returned data
 
-## Backend
+## 📈Backend
 
 ### initiate_app.py
 
