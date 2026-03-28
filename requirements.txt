@@ -3,3 +3,4 @@ python-dotenv
 eventlet
 Flask-SocketIO
 cryptography
+flask_session
