@@ -242,4 +242,5 @@ def load_messages():
 
 if __name__ == "__main__":
     print('strarted debugging')
-    my_sock_ob.run(app,debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    my_sock_ob.run(app,debug=True,port=port,host='0.0.0.0')
