@@ -76,7 +76,7 @@ const socket =io({autoConnect:false});
 
     socket.on('connect',()=>console.log('connected successfully'));
     socket.on('error',()=>console.log("connection failed"));
-    socket.on('join_room',(data)=>console.log(`joined room ${data["room"]}`));
+    socket.on('join_room',(data)=>alert(`joined room ${data["room"]}`));
     socket.on('leave_room',()=>console.log("left room_successfully"));
     socket.on('new_message',(data)=>message_popping(data));
 
