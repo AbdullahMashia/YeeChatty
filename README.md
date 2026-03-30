@@ -20,7 +20,7 @@
 
 ## 🩹 Problem Yeechatty solves:
 
-#### Yeechatty solves the problem of finding a secure and reliable chatting web app. that enables users of finding other potentional users and exchange messages, or even deny the messaging requests, also it solves the problem of bandwith usage for small chat apps since it only loads the last 30 messages if user scrolls up to see old messages it request the secnd after last 30 messages, and so on
+#### Yeechatty solves the problem of finding a secure and reliable chatting web app. that enables users of finding other potentional users and exchange messages, or even deny the messaging requests, also it solves the problem of bandwith usage for small chat apps since it only loads the last 30 messages if user scrolls up to see old messages it request the secnd after last 30 messages, and so on.
 
 ## YeeChatty Project has the following structure:
 
